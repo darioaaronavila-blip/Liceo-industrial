@@ -1,80 +1,199 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán - Formación Técnica Profesional con excelencia, inclusión e innovación." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Ctext y='1em' font-size='96'%3E%F0%9F%9A%A7%3C/text%3E%3C/svg%3E">
 </head>
 <body>
-  <!-- Encabezado -->
-  <header>
-    <div class="logo">Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán</div>
-    <nav>
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#quienes-somos">Quiénes Somos</a></li>
-        <li><a href="#academico">Académico</a></li>
-        <li><a href="#estudiantes">Estudiantes</a></li>
-        <li><a href="#noticias">Noticias</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
+  <!-- Header -->
+  <header class="site-header" data-sticky>
+    <div class="container header-inner">
+      <a href="#inicio" class="brand">
+        <span class="brand-logo" aria-hidden="true">🏫</span>
+        <span class="brand-text">
+          Liceo Industrial Bicentenario de Excelencia<br />
+          <strong>Armando Quezada Acharán</strong>
+        </span>
+      </a>
+
+      <button class="btn icon only" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌓</button>
+
+      <button class="btn icon only" id="navToggle" aria-controls="mainnav" aria-expanded="false" aria-label="Abrir menú">☰</button>
+
+      <nav id="mainnav" class="mainnav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#quienes-somos">Quiénes Somos</a></li>
+          <li><a href="#academico">Académico</a></li>
+          <li><a href="#estudiantes">Estudiantes</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Inicio -->
+  <!-- Jumbotron / Hero: Carrusel -->
   <section id="inicio" class="hero">
-    <h1>Bienvenidos al Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán</h1>
-    <p>Formando estudiantes con excelencia académica y valores.</p>
+    <div class="carousel" id="heroCarousel" aria-label="Galería institucional" data-autoplay="true" data-interval="6000">
+      <div class="carousel-track" role="list">
+        <!-- Los slides se inyectan desde siteData en script.js -->
+      </div>
+
+      <button class="carousel-btn prev" aria-label="Anterior" data-dir="-1">‹</button>
+      <button class="carousel-btn next" aria-label="Siguiente" data-dir="1">›</button>
+
+      <div class="carousel-indicators" role="tablist" aria-label="Seleccionar diapositiva">
+        <!-- Indicadores dinámicos -->
+      </div>
+    </div>
   </section>
 
   <!-- Quiénes Somos -->
-  <section id="quienes-somos">
-    <h2>Quiénes Somos</h2>
-    <p>El Liceo Industrial Bicentenario se refiere al Liceo Industrial Armando Quezada Acharán de Punta Arenas, un establecimiento educativo público con 85 años de historia al servicio de la educación técnica profesional de la ciudad. Puedes encontrar más información sobre sus actividades y proyecto educativo en su página de Facebook y en su cuenta de Instagram. </p>
+  <section id="quienes-somos" class="section container reveal">
+    <header class="section-header">
+      <h2>Quiénes Somos</h2>
+      <p class="lead">
+        Somos un establecimiento Técnico Profesional de Punta Arenas con 85 años de historia, comprometido con la excelencia, la dignidad, la inclusión y la no discriminación.
+      </p>
+    </header>
+
+    <div class="grid grid-2">
+      <article class="card">
+        <h3>Misión</h3>
+        <p>
+          Formar personas íntegras y técnicos competentes, capaces de aportar al desarrollo productivo y social de Magallanes y de Chile.
+        </p>
+      </article>
+      <article class="card">
+        <h3>Visión</h3>
+        <p>
+          Ser un liceo público de referencia nacional en educación TP, articulado con la industria, la educación superior y el territorio.
+        </p>
+      </article>
+    </div>
+
+    <div class="info-badges">
+      <span class="badge">+85 años</span>
+      <span class="badge">TP de Excelencia</span>
+      <span class="badge">PIE &amp; ACLE</span>
+      <span class="badge">Vinculación con la Empresa</span>
+    </div>
   </section>
 
   <!-- Académico -->
-  <section id="academico">
-    <h2>Académico</h2>
-    <ul>
-      <li>Asignaturas principales</li>
-      <li>Talleres y actividades extracurriculares</li>
-      <li>Programas de apoyo (PIE, ACLE)</li>
-    </ul>
+  <section id="academico" class="section alt reveal">
+    <div class="container">
+      <header class="section-header">
+        <h2>Académico</h2>
+        <p class="lead">Planes y programas, especialidades y apoyos para el aprendizaje.</p>
+      </header>
+
+      <!-- Acordeón -->
+      <div class="accordion" id="academicoAccordion">
+        <!-- Items dinámicos desde siteData -->
+      </div>
+    </div>
   </section>
 
   <!-- Estudiantes -->
-  <section id="estudiantes">
-    <h2>Estudiantes</h2>
-    <p>Aquí puedes encontrar horarios, reglamentos y documentos importantes.</p>
-    <a href="#">Descargar reglamento interno (PDF)</a>
+  <section id="estudiantes" class="section reveal">
+    <div class="container">
+      <header class="section-header">
+        <h2>Estudiantes</h2>
+        <p class="lead">Horarios, reglamentos y documentos importantes.</p>
+      </header>
+
+      <div class="quicklinks grid grid-3" id="studentLinks">
+        <!-- Links dinámicos -->
+      </div>
+    </div>
   </section>
 
   <!-- Noticias -->
-  <section id="noticias">
-    <h2>Noticias y Actividades</h2>
-    <article>
-      <h3>Inicio del año escolar</h3>
-      <p>El próximo lunes damos inicio al año escolar con actividades de bienvenida para nuestros estudiantes.</p>
-    </article>
-    <article>
-      <h3>Taller de Ciencias</h3>
-      <p>Invitamos a los alumnos a participar en el nuevo taller de ciencias que se realizará los jueves.</p>
-    </article>
+  <section id="noticias" class="section alt reveal">
+    <div class="container">
+      <header class="section-header">
+        <h2>Noticias y Actividades</h2>
+        <p class="lead">Lo último del liceo: actividades, logros y convocatorias.</p>
+      </header>
+
+      <div class="news-grid" id="newsGrid">
+        <!-- Noticias dinámicas -->
+      </div>
+    </div>
   </section>
 
   <!-- Contacto -->
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <p><strong>Dirección:</strong> Av. Principal 123, Punta Arenas</p>
-    <p><strong>Email:</strong> contacto@liceoejemplo.cl</p>
-    <p><strong>Teléfono:</strong> +56 61 2 123456</p>
+  <section id="contacto" class="section reveal">
+    <div class="container">
+      <header class="section-header">
+        <h2>Contacto</h2>
+        <p class="lead">Estamos para ayudarte.</p>
+      </header>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Información</h3>
+          <p><strong>Dirección:</strong> Av. Principal 123, Punta Arenas</p>
+          <p><strong>Email:</strong> <a href="mailto:contacto@liceoejemplo.cl">contacto@liceoejemplo.cl</a></p>
+          <p><strong>Teléfono:</strong> <a href="tel:+56612123456">+56 61 2 123456</a></p>
+          <hr />
+          <form id="contactForm" class="form">
+            <label>
+              Nombre
+              <input type="text" name="nombre" required />
+            </label>
+            <label>
+              Correo
+              <input type="email" name="correo" required />
+            </label>
+            <label>
+              Mensaje
+              <textarea name="mensaje" rows="4" required></textarea>
+            </label>
+            <button class="btn" type="submit">Enviar</button>
+            <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Ubicación</h3>
+          <div class="map-embed" role="img" aria-label="Mapa de la ubicación">
+            <!-- Reemplaza el src con tu mapa de Google si lo deseas -->
+            <iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-70.941%2C-53.164%2C-70.880%2C-53.106&layer=mapnik">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- Pie de página -->
-  <footer>
-    <p>&copy; 2025 Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán. Todos los derechos reservados.</p>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>Liceo Industrial Bicentenario</strong> • Armando Quezada Acharán
+        <div class="muted">© 2025. Todos los derechos reservados.</div>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook" title="Facebook"></a>
+        <a href="#" aria-label="Instagram" title="Instagram"></a>
+        <a href="#" aria-label="YouTube" title="YouTube"></a>
+      </div>
+      <div class="footer-legal">
+        <a href="#quienes-somos">Proyecto Educativo</a>
+        <a href="#estudiantes">Reglamentos</a>
+        <a href="#contacto">Transparencia</a>
+      </div>
+    </div>
   </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
