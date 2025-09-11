@@ -24,10 +24,13 @@ const siteData = {
       titulo: "Especialidades TP",
       contenido: `
         <ul>
-          <li>Mecánica Industrial</li>
           <li>Electricidad</li>
+          <li>Telecomunicaciones</li>
+          <li>Mecánica Automotriz</li>
+          <li>Mecánica Industrial</li>
+          <li>Instalaciones Sanitarias</li>
+          <li>Construcción</li>
           <li>Construcciones Metálicas</li>
-          <li>Electrónica</li>
         </ul>
         <p>Articulación con empresas locales, liceos y CFT/IP/Universidades.</p>
       `
