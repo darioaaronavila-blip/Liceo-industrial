@@ -1,0 +1,14 @@
+{
+  "name": "liceo-industrial-site",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "serverless-http": "^3.2.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "@aws-sdk/client-s3": "^3.600.0",
+    "@aws-sdk/s3-presigned-post": "^3.600.0"
+  }
+}

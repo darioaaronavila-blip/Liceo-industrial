@@ -1,0 +1,196 @@
+<!-- admin.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panel | Documentos Liceo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    section { margin-top: 2rem; padding: 1rem; border: 1px solid #eee; border-radius: 12px; }
+    label { display:block; margin:.5rem 0 .25rem; font-weight:600; }
+    input[type="text"], input[type="password"] { width:100%; padding:.6rem .75rem; border:1px solid #ddd; border-radius:10px; }
+    input[type="file"] { margin-top:.5rem; }
+    button { padding:.6rem 1rem; border:0; border-radius:10px; cursor:pointer; }
+    button.primary { background:#1a3d7c; color:white; }
+    table { width:100%; border-collapse: collapse; margin-top: .75rem; }
+    th, td { padding:.5rem; border-bottom:1px solid #eee; text-align:left; font-size: .95rem; }
+    .row { display:flex; gap:1rem; align-items:end; }
+    .muted { color:#667085; font-size:.9rem; }
+    .pill { display:inline-block; padding:.2rem .5rem; border-radius:999px; background:#f4f6f8; }
+    .danger { color:#c62828; }
+    .ok { color:#2e7d32; }
+    .grid { display:grid; gap:.75rem; grid-template-columns: 1fr 1fr; }
+    @media (max-width:720px){ .grid{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Panel de documentos</h1>
+    <span class="muted">Liceo Industrial “Armando Quezada Acharán”</span>
+  </header>
+
+  <section>
+    <h2>Credenciales de admin</h2>
+    <div class="grid">
+      <div>
+        <label>Admin Key (x-admin-key)</label>
+        <input id="adminKey" type="password" placeholder="Pega tu clave de admin..." />
+      </div>
+      <div>
+        <label>Archivo PDF</label>
+        <input id="file" type="file" accept="application/pdf" />
+      </div>
+    </div>
+    <div class="row" style="margin-top: .75rem;">
+      <button class="primary" id="uploadBtn">Subir PDF</button>
+      <div id="uploadMsg" class="muted"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Reglamentos / Documentos subidos</h2>
+    <div class="row">
+      <button id="refreshBtn">Actualizar lista</button>
+      <div class="muted">Prefijo: <span class="pill">docs/</span></div>
+    </div>
+    <table id="list">
+      <thead>
+      <tr><th>Archivo</th><th>Tamaño</th><th>Fecha</th><th>Link público</th><th></th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Estado de despliegues (Vercel)</h2>
+    <div class="row">
+      <button id="deployBtn">Ver últimos</button>
+      <div id="deployMsg" class="muted"></div>
+    </div>
+    <table id="deploys">
+      <thead>
+      <tr><th>URL</th><th>Estado</th><th>Creado</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+async function presign(filename, adminKey) {
+  const r = await fetch("/api/files/presign", {
+    method: "POST",
+    headers: { "Content-Type":"application/json", "x-admin-key": adminKey },
+    body: JSON.stringify({ filename })
+  });
+  if (!r.ok) throw new Error("No autorizado o error al generar URL firmada");
+  return r.json();
+}
+
+async function uploadToS3(url, fields, file) {
+  const form = new FormData();
+  Object.entries(fields).forEach(([k,v]) => form.append(k, v));
+  form.append("Content-Type", "application/pdf");
+  form.append("file", file);
+  const r = await fetch(url, { method: "POST", body: form });
+  if (!r.ok) throw new Error("Error al subir a S3");
+}
+
+async function listFiles(adminKey) {
+  const r = await fetch("/api/files", { headers: { "x-admin-key": adminKey }});
+  if (!r.ok) throw new Error("No autorizado o error al listar");
+  return r.json();
+}
+
+async function deleteFile(key, adminKey) {
+  const r = await fetch(`/api/files/${encodeURIComponent(key)}`, { method: "DELETE", headers: { "x-admin-key": adminKey } });
+  if (!r.ok) throw new Error("No autorizado o error al borrar");
+}
+
+function fmtSize(bytes){
+  if (!bytes && bytes!==0) return "-";
+  const u = ["B","KB","MB","GB"]; let i=0; let n=bytes;
+  while(n>=1024 && i<u.length-1){ n/=1024; i++; }
+  return `${n.toFixed(1)} ${u[i]}`;
+}
+
+function fmtDate(ts){
+  try { return new Date(ts).toLocaleString(); } catch { return "-"; }
+}
+
+$("#uploadBtn").addEventListener("click", async () => {
+  const adminKey = $("#adminKey").value.trim();
+  const file = $("#file").files?.[0];
+  if (!adminKey) return $("#uploadMsg").textContent = "Ingresa tu Admin Key.";
+  if (!file) return $("#uploadMsg").textContent = "Selecciona un PDF.";
+  $("#uploadMsg").textContent = "Generando URL segura…";
+  try {
+    const { url, fields, publicUrl } = await presign(file.name, adminKey);
+    $("#uploadMsg").textContent = "Subiendo a almacenamiento…";
+    await uploadToS3(url, fields, file);
+    $("#uploadMsg").innerHTML = `✔ Subido. Link público: <a href="${publicUrl}" target="_blank">${publicUrl}</a>`;
+    await refreshList();
+  } catch(e){
+    $("#uploadMsg").textContent = "Error: " + e.message;
+  }
+});
+
+async function refreshList(){
+  const adminKey = $("#adminKey").value.trim();
+  const tbody = $("#list tbody");
+  tbody.innerHTML = "";
+  try{
+    const { items } = await listFiles(adminKey);
+    items.forEach(it => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><code>${it.key}</code></td>
+        <td>${fmtSize(it.size)}</td>
+        <td>${fmtDate(it.lastModified)}</td>
+        <td><a href="${it.url}" target="_blank">Abrir</a></td>
+        <td><button data-key="${it.key}" class="danger">Borrar</button></td>`;
+      tbody.appendChild(tr);
+    });
+    $$("#list button.danger").forEach(btn => btn.addEventListener("click", async () => {
+      const key = btn.dataset.key;
+      const adminKey = $("#adminKey").value.trim();
+      if (confirm(`¿Borrar ${key}?`)) {
+        try { await deleteFile(key, adminKey); await refreshList(); } catch(e){ alert("Error: "+e.message); }
+      }
+    }));
+  }catch(e){
+    tbody.innerHTML = `<tr><td colspan="5">Error: ${e.message}</td></tr>`;
+  }
+}
+
+$("#refreshBtn").addEventListener("click", refreshList);
+
+$("#deployBtn").addEventListener("click", async () => {
+  const adminKey = $("#adminKey").value.trim();
+  const tbody = $("#deploys tbody");
+  tbody.innerHTML = "";
+  $("#deployMsg").textContent = "Consultando Vercel…";
+  try{
+    const r = await fetch("/api/deployments", { headers: { "x-admin-key": adminKey } });
+    if (!r.ok) throw new Error("No autorizado o error");
+    const { deployments } = await r.json();
+    deployments.forEach(d => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><a href="https://${d.url}" target="_blank">${d.url}</a></td>
+        <td>${d.state}</td>
+        <td>${fmtDate(d.createdAt)}</td>`;
+      tbody.appendChild(tr);
+    });
+    $("#deployMsg").textContent = "";
+  }catch(e){
+    $("#deployMsg").textContent = "Error: " + e.message;
+  }
+});
+</script>
+</body>
+</html>
