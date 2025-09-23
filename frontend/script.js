@@ -4,17 +4,17 @@
 const siteData = {
   hero: [
     {
-      img: "https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=1600&auto=format&fit=crop",
+      img: "https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/IMG_20250912_081359.jpg",
       title: "Formación Técnica con Excelencia",
       text: "Aprendizajes significativos conectados con la industria y el territorio."
     },
     {
-      img: "https://images.unsplash.com/photo-1478479405421-ce83c92fb3a8?q=80&w=1600&auto=format&fit=crop",
+      img: "https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/IMG_20250915_165326.jpg",
       title: "Inclusión y Dignidad",
       text: "Un liceo público para todas y todos, sin discriminación."
     },
     {
-      img: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop",
+      img: "https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/IMG_20250923_073916.jpg",
       title: "Innovación Pedagógica",
       text: "Metodologías activas y proyectos con sentido."
     }
@@ -39,9 +39,17 @@ const siteData = {
       titulo: "Asignaturas & Plan Común",
       contenido: `
         <ul>
-          <li>Lengua y Literatura, Matemática, Historia, Ciencias</li>
-          <li>Inglés, Educación Ciudadana, Filosofía</li>
-          <li>Educación Física y Salud</li>
+          <li>Lengua y Literatura</li>
+          <li>Inglés</li>
+          <li>Quimica</li>
+          <li>Fisica</li>
+          <li>Biologia</li>
+          <li>Matematicas</li>
+          <li>Educacion fisica y salud</li>
+          <li>Laboratorio Vocacional</li>
+          <li>Orientacion</li>
+          <li>Musica</li>
+          <li>Historia</li>
         </ul>
       `
     },
