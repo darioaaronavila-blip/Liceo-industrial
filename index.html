@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán</title>
   <meta name="description" content="Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán - Formación Técnica Profesional con excelencia, inclusión e innovación." />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Ctext y='1em' font-size='96'%3E%F0%9F%9A%A7%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <!-- Header -->
   <header class="site-header" data-sticky>
     <div class="container header-inner">
-      <a href="#inicio" class="brand">
+      <a href="/inicio" class="brand">
         <span class="brand-logo" aria-hidden="true">
-  <img src="https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/OIP-removebg-preview.png" alt="Logo del liceo" style="height: 1em; vertical-align: middle;">
-</span>
-
+          <img src="/img/OIP-removebg-preview.png" alt="Logo del liceo" style="height: 1.2em; vertical-align: middle;">
+        </span>
         <span class="brand-text">
           Liceo Industrial Bicentenario de Excelencia<br />
           <strong>Armando Quezada Acharán</strong>
@@ -24,40 +23,33 @@
       </a>
 
       <button class="btn icon only" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">🌓</button>
-
       <button class="btn icon only" id="navToggle" aria-controls="mainnav" aria-expanded="false" aria-label="Abrir menú">☰</button>
 
       <nav id="mainnav" class="mainnav" aria-label="Navegación principal">
         <ul>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#quienes-somos">Quiénes Somos</a></li>
-          <li><a href="#academico">Académico</a></li>
-          <li><a href="#estudiantes">Estudiantes</a></li>
-          <li><a href="#noticias">Noticias</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="/inicio">Inicio</a></li>
+          <li><a href="/quienes-somos">Quiénes Somos</a></li>
+          <li><a href="/academico">Académico</a></li>
+          <li><a href="/estudiantes">Estudiantes</a></li>
+          <li><a href="/noticias">Noticias</a></li>
+          <li><a href="/contacto">Contacto</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Jumbotron / Hero: Carrusel -->
-  <section id="inicio" class="hero">
+  <section id="inicio" class="hero view is-active" aria-hidden="false">
     <div class="carousel" id="heroCarousel" aria-label="Galería institucional" data-autoplay="true" data-interval="6000">
-      <div class="carousel-track" role="list">
-        <!-- Los slides se inyectan desde siteData en script.js -->
-      </div>
-
+      <div class="carousel-track" role="list"></div>
       <button class="carousel-btn prev" aria-label="Anterior" data-dir="-1">‹</button>
       <button class="carousel-btn next" aria-label="Siguiente" data-dir="1">›</button>
-
-      <div class="carousel-indicators" role="tablist" aria-label="Seleccionar diapositiva">
-        <!-- Indicadores dinámicos -->
-      </div>
+      <div class="carousel-indicators" role="tablist" aria-label="Seleccionar diapositiva"></div>
     </div>
   </section>
 
   <!-- Quiénes Somos -->
-  <section id="quienes-somos" class="section container reveal">
+  <section id="quienes-somos" class="section container reveal view" aria-hidden="true">
     <header class="section-header">
       <h2>Quiénes Somos</h2>
       <p class="lead">
@@ -69,13 +61,13 @@
       <article class="card">
         <h3>Misión</h3>
         <p>
-          Queremos ser una institución educativa que otorga espacios para la reflexión y el diálogo, que facilita la construcción de aprendizajes, un liceo que educa para el desarrollo de competencias y una cultura de seguridad y autocuidado, asociados a conocimientos y valores, garantizando el desarrollo personal y social de nuestros estudiantes. Que se adecúa a los cambios permanentes de medio y la evolución de las nuevas generaciones
+          Queremos ser una institución educativa que otorga espacios para la reflexión y el diálogo, que facilita la construcción de aprendizajes, un liceo que educa para el desarrollo de competencias y una cultura de seguridad y autocuidado, asociados a conocimientos y valores, garantizando el desarrollo personal y social de nuestros estudiantes. Que se adecúa a los cambios permanentes del medio y la evolución de las nuevas generaciones.
         </p>
       </article>
       <article class="card">
         <h3>Visión</h3>
         <p>
-          Somos un Liceo Técnico Profesional Industrial, Bicentenario de Excelencia, que forma estudiantes con habilidades académicas, técnicas y profesionales, preparados para enfrentar los cambios tecnológicos. Que entrega oportunidades y herramientas para fomentar valores y actitudes que les permitan ser ciudadanos honestos, críticos, responsables y solidarios, para contribuir al crecimiento de nuestra sociedad en un clima de convivencia respetuoso y tolerante, desarrollándose de manera eficiente en el mundo laboral
+          Somos un Liceo Técnico Profesional Industrial, Bicentenario de Excelencia, que forma estudiantes con habilidades académicas, técnicas y profesionales, preparados para enfrentar los cambios tecnológicos. Que entrega oportunidades y herramientas para fomentar valores y actitudes que les permitan ser ciudadanos honestos, críticos, responsables y solidarios, para contribuir al crecimiento de nuestra sociedad en un clima de convivencia respetuoso y tolerante, desarrollándose de manera eficiente en el mundo laboral.
         </p>
       </article>
     </div>
@@ -89,50 +81,40 @@
   </section>
 
   <!-- Académico -->
-  <section id="academico" class="section alt reveal">
+  <section id="academico" class="section alt reveal view" aria-hidden="true">
     <div class="container">
       <header class="section-header">
         <h2>Académico</h2>
         <p class="lead">Planes y programas, especialidades y apoyos para el aprendizaje.</p>
       </header>
-
-      <!-- Acordeón -->
-      <div class="accordion" id="academicoAccordion">
-        <!-- Items dinámicos desde siteData -->
-      </div>
+      <div class="accordion" id="academicoAccordion"></div>
     </div>
   </section>
 
   <!-- Estudiantes -->
-  <section id="estudiantes" class="section reveal">
+  <section id="estudiantes" class="section reveal view" aria-hidden="true">
     <div class="container">
       <header class="section-header">
         <h2>Estudiantes</h2>
         <p class="lead">Horarios, reglamentos y documentos importantes.</p>
       </header>
-
-      <div class="quicklinks grid grid-3" id="studentLinks">
-        <!-- Links dinámicos -->
-      </div>
+      <div class="quicklinks grid grid-3" id="studentLinks"></div>
     </div>
   </section>
 
   <!-- Noticias -->
-  <section id="noticias" class="section alt reveal">
+  <section id="noticias" class="section alt reveal view" aria-hidden="true">
     <div class="container">
       <header class="section-header">
         <h2>Noticias y Actividades</h2>
         <p class="lead">Lo último del liceo: actividades, logros y convocatorias.</p>
       </header>
-
-      <div class="news-grid" id="newsGrid">
-        <!-- Noticias dinámicas -->
-      </div>
+      <div class="news-grid" id="newsGrid"></div>
     </div>
   </section>
 
   <!-- Contacto -->
-  <section id="contacto" class="section reveal">
+  <section id="contacto" class="section reveal view" aria-hidden="true">
     <div class="container">
       <header class="section-header">
         <h2>Contacto</h2>
@@ -147,18 +129,9 @@
           <p><strong>Teléfono:</strong> <a href="tel:+56612123456">+56 61 2 123456</a></p>
           <hr />
           <form id="contactForm" class="form">
-            <label>
-              Nombre
-              <input type="text" name="nombre" required />
-            </label>
-            <label>
-              Correo
-              <input type="email" name="correo" required />
-            </label>
-            <label>
-              Mensaje
-              <textarea name="mensaje" rows="4" required></textarea>
-            </label>
+            <label>Nombre <input type="text" name="nombre" required /></label>
+            <label>Correo <input type="email" name="correo" required /></label>
+            <label>Mensaje <textarea name="mensaje" rows="4" required></textarea></label>
             <button class="btn" type="submit">Enviar</button>
             <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
           </form>
@@ -167,7 +140,6 @@
         <div class="card">
           <h3>Ubicación</h3>
           <div class="map-embed" role="img" aria-label="Mapa de la ubicación">
-            <!-- Reemplaza el src con tu mapa de Google si lo deseas -->
             <iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
               src="https://www.openstreetmap.org/export/embed.html?bbox=-70.941%2C-53.164%2C-70.880%2C-53.106&layer=mapnik">
             </iframe>
@@ -190,13 +162,13 @@
         <a href="#" aria-label="YouTube" title="YouTube"></a>
       </div>
       <div class="footer-legal">
-        <a href="#quienes-somos">Proyecto Educativo</a>
-        <a href="#estudiantes">Reglamentos</a>
-        <a href="#contacto">Transparencia</a>
+        <a href="/quienes-somos">Proyecto Educativo</a>
+        <a href="/estudiantes">Reglamentos</a>
+        <a href="/contacto">Transparencia</a>
       </div>
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script src="/script.js" defer></script>
 </body>
 </html>

@@ -394,3 +394,41 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .carousel-track, .ac-panel, .reveal { transition: none !important; }
 }
+
+/* ===== SPA: Vistas con fade elegante ===== */
+.view {
+  display: none;
+}
+.view.is-active {
+  display: block;
+  animation: viewFade .35s ease both;
+}
+@keyframes viewFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Compensación por header sticky al navegar por secciones */
+#inicio, #quienes-somos, #academico, #estudiantes, #noticias, #contacto {
+  scroll-margin-top: 80px;
+}
+
+/* Evitar scroll horizontal por ancho 100vw del carrusel */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Ajustes responsivos extra para el carrusel full-bleed */
+@media (max-width: 600px) {
+  .carousel {
+    aspect-ratio: 16/10;
+    max-height: 60vh;
+  }
+  .slide-caption {
+    max-width: 92%;
+    padding: 14px;
+  }
+  .slide-caption h1 {
+    font-size: clamp(1.4rem, 1.1rem + 2vw, 2.2rem);
+  }
+}
