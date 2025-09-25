@@ -4,17 +4,17 @@
 const siteData = {
   hero: [
     {
-      img: "https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/IMG_20250912_081359.jpg",
+      img: "img/IMG_20250912_081359.jpg",
       title: "Formación Técnica con Excelencia",
       text: "Aprendizajes significativos conectados con la industria y el territorio."
     },
     {
-      img: "https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/IMG_20250915_165326.jpg",
+      img: "img/IMG_20250915_165326.jpg",
       title: "Inclusión y Dignidad",
       text: "Un liceo público para todas y todos, sin discriminación."
     },
     {
-      img: "https://raw.githubusercontent.com/Bastian906/Liceo-industrial/refs/heads/main/IMG_20250923_073916.jpg",
+      img: "img/IMG_20250923_073916.jpg",
       title: "Innovación Pedagógica",
       text: "Metodologías activas y proyectos con sentido."
     }
@@ -41,14 +41,14 @@ const siteData = {
         <ul>
           <li>Lengua y Literatura</li>
           <li>Inglés</li>
-          <li>Quimica</li>
-          <li>Fisica</li>
-          <li>Biologia</li>
-          <li>Matematicas</li>
-          <li>Educacion fisica y salud</li>
+          <li>Química</li>
+          <li>Física</li>
+          <li>Biología</li>
+          <li>Matemáticas</li>
+          <li>Educación Física y Salud</li>
           <li>Laboratorio Vocacional</li>
-          <li>Orientacion</li>
-          <li>Musica</li>
+          <li>Orientación</li>
+          <li>Música</li>
           <li>Historia</li>
         </ul>
       `
@@ -102,7 +102,6 @@ const siteData = {
 ========================================================= */
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-
 function formatDate(iso) {
   const d = new Date(iso);
   return d.toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
@@ -135,40 +134,64 @@ navToggle?.addEventListener("click", () => {
   const open = mainnav.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", open ? "true" : "false");
 });
-$$(".mainnav a").forEach(a => a.addEventListener("click", () => {
-  mainnav.classList.remove("open");
-  navToggle.setAttribute("aria-expanded", "false");
+$$(".mainnav a").forEach(a => a.addEventListener("click", (e) => {
+  e.preventDefault();
+  const slug = a.getAttribute("href").replace("/", "");
+  navigate(slug);
 }));
 
 /* =========================================================
-   Scroll suave + sección activa
+   SPA Router con History API (modo slash)
 ========================================================= */
-$$('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", e => {
-    const id = anchor.getAttribute("href");
-    const el = $(id);
-    if (el) {
-      e.preventDefault();
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      history.pushState(null, "", id);
-    }
+const ROUTES = {
+  "": "inicio",
+  "inicio": "inicio",
+  "quienes-somos": "quienes-somos",
+  "academico": "academico",
+  "estudiantes": "estudiantes",
+  "noticias": "noticias",
+  "contacto": "contacto",
+};
+const VIEWS = Object.values(ROUTES).map(id => document.getElementById(id)).filter(Boolean);
+VIEWS.forEach(sec => sec.classList.add("view"));
+
+function showView(id) {
+  VIEWS.forEach(sec => {
+    const active = sec.id === id;
+    sec.classList.toggle("is-active", active);
+    sec.setAttribute("aria-hidden", active ? "false" : "true");
   });
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+function setActiveNav(path) {
+  $$(".mainnav a").forEach(a => a.classList.remove("active"));
+  const link = document.querySelector(`.mainnav a[href='${path}']`);
+  if (link) link.classList.add("active");
+}
+function navigate(slug, replace = false) {
+  const id = ROUTES[slug] || "inicio";
+  showView(id);
+  setActiveNav("/" + slug);
+  document.title = `Liceo Industrial – ${slug || "inicio"}`;
+  const url = "/" + (slug || "");
+  if (replace) {
+    history.replaceState({ slug }, "", url);
+  } else {
+    history.pushState({ slug }, "", url);
+  }
+  mainnav?.classList.remove("open");
+  navToggle?.setAttribute("aria-expanded", "false");
+}
+window.addEventListener("popstate", (e) => {
+  const slug = e.state?.slug || location.pathname.replace("/", "") || "inicio";
+  showView(ROUTES[slug] || "inicio");
+  setActiveNav("/" + slug);
 });
-const ioNav = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    const id = "#" + entry.target.id;
-    const link = document.querySelector(`.mainnav a[href='${id}']`);
-    if (!link) return;
-    if (entry.isIntersecting) {
-      $$(".mainnav a").forEach(a => a.classList.remove("active"));
-      link.classList.add("active");
-    }
-  });
-}, { rootMargin: "-50% 0px -50% 0px", threshold: 0 });
-["inicio","quienes-somos","academico","estudiantes","noticias","contacto"].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) ioNav.observe(el);
-});
+(function bootRouter() {
+  VIEWS.forEach(v => v.setAttribute("aria-hidden", "true"));
+  const slug = location.pathname.replace("/", "");
+  navigate(slug, true);
+})();
 
 /* =========================================================
    Reveal on scroll
@@ -179,20 +202,18 @@ const revealer = new IntersectionObserver((entries) => {
 $$(".reveal").forEach(el => revealer.observe(el));
 
 /* =========================================================
-   Hero Carousel (accesible + táctil)
+   Hero Carousel
 ========================================================= */
 function createCarousel({ root, slides, autoplay = true, interval = 6000 }) {
   const track = root.querySelector(".carousel-track");
   const indicators = root.querySelector(".carousel-indicators");
   let idx = 0, timer = null, isHover = false;
 
-  // Render slides
   track.innerHTML = "";
   indicators.innerHTML = "";
   slides.forEach((s, i) => {
     const li = document.createElement("div");
     li.className = "slide";
-    li.setAttribute("role", "listitem");
     li.innerHTML = `
       <img src="${s.img}" alt="${s.title}" loading="lazy">
       <div class="slide-caption">
@@ -203,9 +224,6 @@ function createCarousel({ root, slides, autoplay = true, interval = 6000 }) {
     track.appendChild(li);
 
     const dot = document.createElement("button");
-    dot.type = "button";
-    dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-label", `Ir a la diapositiva ${i + 1}`);
     dot.addEventListener("click", () => go(i));
     indicators.appendChild(dot);
   });
@@ -216,42 +234,17 @@ function createCarousel({ root, slides, autoplay = true, interval = 6000 }) {
       b.setAttribute("aria-selected", i === idx ? "true" : "false");
     });
   }
-  function next(dir = 1) {
-    idx = (idx + dir + slides.length) % slides.length;
-    update();
-  }
+  function next(dir = 1) { idx = (idx + dir + slides.length) % slides.length; update(); }
   function go(i) { idx = i % slides.length; update(); }
 
-  // Controls
   root.querySelector(".prev").addEventListener("click", () => next(-1));
   root.querySelector(".next").addEventListener("click", () => next(1));
 
-  // Autoplay
-  function play() {
-    if (!autoplay) return;
-    stop();
-    timer = setInterval(() => { if (!isHover) next(1); }, interval);
-  }
+  function play() { if (!autoplay) return; stop(); timer = setInterval(() => { if (!isHover) next(1); }, interval); }
   function stop() { if (timer) clearInterval(timer); }
   root.addEventListener("mouseenter", () => { isHover = true; });
   root.addEventListener("mouseleave", () => { isHover = false; });
 
-  // Touch
-  let startX = 0, dx = 0;
-  root.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; dx = 0; }, { passive: true });
-  root.addEventListener("touchmove", (e) => { dx = e.touches[0].clientX - startX; }, { passive: true });
-  root.addEventListener("touchend", () => {
-    if (Math.abs(dx) > 40) next(dx > 0 ? -1 : 1);
-  });
-
-  // Keyboard
-  root.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") next(-1);
-    else if (e.key === "ArrowRight") next(1);
-  });
-  root.setAttribute("tabindex", "0");
-
-  // Init
   update(); play();
   document.addEventListener("visibilitychange", () => document.hidden ? stop() : play());
 
@@ -282,14 +275,8 @@ function mountAccordion(root, items) {
     trigger.addEventListener("click", () => {
       const isOpen = el.classList.toggle("open");
       trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      // Auto height
-      if (isOpen) {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-      } else {
-        panel.style.maxHeight = "0px";
-      }
+      panel.style.maxHeight = isOpen ? panel.scrollHeight + "px" : "0px";
     });
-    // Open first by default
     if (i === 0) {
       el.classList.add("open");
       trigger.setAttribute("aria-expanded", "true");
@@ -316,7 +303,6 @@ function renderStudentLinks(root, items) {
    Render Noticias
 ========================================================= */
 function renderNews(root, items) {
-  // Orden cronológico descendente
   const sorted = [...items].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
   root.innerHTML = sorted.map(n => `
     <article class="news-card">
@@ -337,7 +323,6 @@ function renderNews(root, items) {
 $("#contactForm")?.addEventListener("submit", (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.currentTarget));
-  // Aquí podrías realizar fetch a tu backend / Forms / GAS
   $("#formMsg").textContent = `Gracias, ${data.nombre}. Responderemos a ${data.correo}.`;
   e.currentTarget.reset();
 });
@@ -346,7 +331,6 @@ $("#contactForm")?.addEventListener("submit", (e) => {
    Boot
 ========================================================= */
 window.addEventListener("DOMContentLoaded", () => {
-  // Carousel
   const hero = $("#heroCarousel");
   if (hero) {
     createCarousel({
@@ -356,10 +340,7 @@ window.addEventListener("DOMContentLoaded", () => {
       interval: Number(hero.dataset.interval || 6000)
     });
   }
-  // Académico
   mountAccordion($("#academicoAccordion"), siteData.academico);
-  // Estudiantes
   renderStudentLinks($("#studentLinks"), siteData.estudiantes);
-  // Noticias
   renderNews($("#newsGrid"), siteData.noticias);
 });
