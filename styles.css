@@ -153,29 +153,29 @@ body {
 }
 
 .carousel {
-  width: 100vw;                /* ocupa todo el ancho de la pantalla */
-  aspect-ratio: 16/7;          /* mantiene proporción */
+  width: 100vw;
+  aspect-ratio: 16/7;
   max-height: 80vh;
   overflow: hidden;
   position: relative;
-  display: flex;               /* flex para centrar contenido */
+  display: flex;
   justify-content: center;
   align-items: center;
   background: var(--surface-alt);
 }
 
 .carousel-track {
-  display: flex;               /* flex en lugar de grid */
+  display: flex;
   width: 100%;
   height: 100%;
   transition: transform .6s ease;
 }
 
 .slide {
-  min-width: 100%;             /* cada slide ocupa todo el ancho */
+  min-width: 100%;
   height: 100%;
   position: relative;
-  display: flex;               /* flex para centrar caption */
+  display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
@@ -203,7 +203,7 @@ body {
 .slide-caption {
   position: relative;
   z-index: 3;
-  text-align: center;          /* centrado horizontal */
+  text-align: center;
   max-width: 800px;
   padding: 20px;
   background: color-mix(in oklab, #000 45%, transparent);
@@ -432,6 +432,7 @@ html, body {
     font-size: clamp(1.4rem, 1.1rem + 2vw, 2.2rem);
   }
 }
+
 /* ===== Modal Noticias ===== */
 .modal {
   position: fixed;
@@ -442,7 +443,6 @@ html, body {
   justify-content: center;
   z-index: 100;
 }
-
 .modal.show { display: flex; }
 
 .modal-content {
@@ -456,7 +456,6 @@ html, body {
   position: relative;
   text-align: center;
 }
-
 .modal-content img {
   width: 100%;
   border-radius: 10px;

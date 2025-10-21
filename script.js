@@ -78,21 +78,22 @@ const siteData = {
       fecha: "2025-03-03",
       img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop",
       resumen: "Damos la bienvenida a nuestras y nuestros estudiantes con actividades por curso.",
-      url: "#"
+      // Nuevo: texto distinto para el pop-up
+      detalle: "Bienvenidas y bienvenidos al nuevo año escolar. Este es un texto ampliado a modo de placeholder/dummy para el modal: aquí podrías incluir el saludo del equipo directivo, información sobre horarios de ingreso, uniformes, protocolos de convivencia, y recordatorios de útiles. Este contenido es distinto al resumen de la tarjeta."
     },
     {
       titulo: "Taller de Ciencias",
       fecha: "2025-04-10",
       img: "https://images.unsplash.com/photo-1581091014534-8987c1d647c9?q=80&w=1600&auto=format&fit=crop",
       resumen: "Experimentos los días jueves después de clases. Cupos limitados.",
-      url: "#"
+      detalle: "Texto dummy para el modal del Taller de Ciencias: descripción de experiencias, objetivos de aprendizaje, docentes a cargo, materiales requeridos y forma de inscripción. Este texto es deliberadamente diferente al resumen."
     },
     {
       titulo: "Fortaleciendo Habilidades Laborales",
       fecha: "2025-05-22",
       img: "https://www.subirfoto.es/get/sRdVW5.jpg",
-      resumen: "El día lunes 06 de octubre se desarrolló en nuestro Liceo la ceremonia de inauguración del Programa Fortaleciendo Habilidades para el Mundo Laboral. Esta actividad estuvo a cargo de la ONG Canales y la empresa HIF, y contó con la participación de José Raúl Alvarado Díaz, director del establecimiento; Carolina Bahamonde, encargada de Desarrollo Comunitario de la empresa HIF; y Karina Toledo, representante de la ONG Canales. El objetivo fundamental de dicha instancia se orienta a desarrollar en los y las estudiantes de la EMTP competencias socio laborales esenciales, comunicación efectiva, trabajo en equipo, uso responsable de la información y ciudadanía digital para su inserción ética, segura y colaborativa en entornos tecnológicos como los que impulsa HIF Global en Magallanes. En el Liceo Industrial Armando Quezada Acharán estamos conscientes de lo relevante que son las posibilidades de desarrollo y valoramos enormemente el compromiso de las empresas miembros del CAE, quienes constantemente ofrecen oportunidades de desarrollo y mejora para nuestros estudiantes. Seguimos avanzando. Ong Canales, HIF Chile, HIF Global.",
-      url: "#"
+      resumen: "Ceremonia de inauguración del Programa Fortaleciendo Habilidades para el Mundo Laboral con ONG Canales y HIF.",
+      detalle: "Contenido extendido (placeholder) para el pop-up: reseña del programa, competencias socio-laborales a desarrollar (comunicación efectiva, trabajo en equipo, ciudadanía digital), y agradecimientos a ONG Canales y HIF Global. Este texto no replica el resumen."
     }
   ]
 };
@@ -301,6 +302,7 @@ function renderStudentLinks(root, items) {
 
 /* =========================================================
    Render Noticias
+   (Ahora el modal muestra "detalle" o un placeholder)
 ========================================================= */
 function renderNews(root, items) {
   const sorted = [...items].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
@@ -323,31 +325,40 @@ function renderNews(root, items) {
   const modalText = document.getElementById("modalText");
   const closeBtn = modal.querySelector(".modal-close");
 
+  // Accesible: cerrar con ESC
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && modal.classList.contains("show")) {
+      closeModal();
+    }
+  });
+
+  function openModal(news) {
+    const placeholder =
+      "Texto informativo (placeholder) para el modal: aquí puedes ampliar la noticia con detalles, fechas, contacto, links y fotografías. Este texto es distinto al mostrado en la tarjeta.";
+    modalImg.src = news.img || "";
+    modalTitle.textContent = news.titulo || "";
+    // Usa 'detalle' si existe; si no, usa texto dummy
+    modalText.textContent = news.detalle?.trim() || placeholder;
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+
   root.querySelectorAll(".readmore").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const idx = e.currentTarget.dataset.index;
       const news = sorted[idx];
-      modalImg.src = news.img;
-      modalTitle.textContent = news.titulo;
-      modalText.textContent = news.resumen;
-      modal.classList.add("show");
-      document.body.style.overflow = "hidden"; // evita scroll del fondo
+      openModal(news);
     });
   });
 
-  closeBtn.addEventListener("click", () => {
-    modal.classList.remove("show");
-    document.body.style.overflow = "";
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.classList.remove("show");
-      document.body.style.overflow = "";
-    }
-  });
+  closeBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 }
-
 
 /* =========================================================
    Formulario de Contacto (demo)
