@@ -88,10 +88,10 @@ const siteData = {
       url: "#"
     },
     {
-      titulo: "Campeonato de Futsal",
+      titulo: "Fortaleciendo Habilidades Laborales",
       fecha: "2025-05-22",
-      img: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1600&auto=format&fit=crop",
-      resumen: "Inscripciones abiertas por curso. ¡A moverse!",
+      img: "https://www.subirfoto.es/get/sRdVW5.jpg",
+      resumen: "El día lunes 06 de octubre se desarrolló en nuestro Liceo la ceremonia de inauguración del Programa Fortaleciendo Habilidades para el Mundo Laboral. Esta actividad estuvo a cargo de la ONG Canales y la empresa HIF, y contó con la participación de José Raúl Alvarado Díaz, director del establecimiento; Carolina Bahamonde, encargada de Desarrollo Comunitario de la empresa HIF; y Karina Toledo, representante de la ONG Canales. El objetivo fundamental de dicha instancia se orienta a desarrollar en los y las estudiantes de la EMTP competencias socio laborales esenciales, comunicación efectiva, trabajo en equipo, uso responsable de la información y ciudadanía digital para su inserción ética, segura y colaborativa en entornos tecnológicos como los que impulsa HIF Global en Magallanes. En el Liceo Industrial Armando Quezada Acharán estamos conscientes de lo relevante que son las posibilidades de desarrollo y valoramos enormemente el compromiso de las empresas miembros del CAE, quienes constantemente ofrecen oportunidades de desarrollo y mejora para nuestros estudiantes. Seguimos avanzando. Ong Canales, HIF Chile, HIF Global.",
       url: "#"
     }
   ]
