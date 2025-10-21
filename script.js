@@ -304,18 +304,50 @@ function renderStudentLinks(root, items) {
 ========================================================= */
 function renderNews(root, items) {
   const sorted = [...items].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
-  root.innerHTML = sorted.map(n => `
-    <article class="news-card">
+  root.innerHTML = sorted.map((n, i) => `
+    <article class="news-card" data-index="${i}">
       <img src="${n.img}" alt="${n.titulo}" loading="lazy" />
       <div class="news-body">
         <h3>${n.titulo}</h3>
         <time datetime="${n.fecha}">${formatDate(n.fecha)}</time>
         <p>${n.resumen}</p>
-        <a class="readmore" href="${n.url}">Leer más →</a>
+        <button class="readmore btn-small" data-index="${i}">Ver más</button>
       </div>
     </article>
   `).join("");
+
+  // --- Modal handling ---
+  const modal = document.getElementById("newsModal");
+  const modalImg = document.getElementById("modalImg");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalText = document.getElementById("modalText");
+  const closeBtn = modal.querySelector(".modal-close");
+
+  root.querySelectorAll(".readmore").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const idx = e.currentTarget.dataset.index;
+      const news = sorted[idx];
+      modalImg.src = news.img;
+      modalTitle.textContent = news.titulo;
+      modalText.textContent = news.resumen;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden"; // evita scroll del fondo
+    });
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+  });
 }
+
 
 /* =========================================================
    Formulario de Contacto (demo)
