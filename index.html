@@ -87,7 +87,9 @@
         <h2>Académico</h2>
         <p class="lead">Planes y programas, especialidades y apoyos para el aprendizaje.</p>
       </header>
-      <div class="accordion" id="academicoAccordion"></div>
+
+      <!-- NUEVO: Tarjetas horizontales que abren pop-up -->
+      <div id="academicoCards" class="acad-cards" role="list"></div>
     </div>
   </section>
 
@@ -176,6 +178,15 @@
       <img id="modalImg" src="" alt="" />
       <h3 id="modalTitle"></h3>
       <p id="modalText"></p>
+    </div>
+  </div>
+
+  <!-- Modal Académico (para tarjetas) -->
+  <div id="academicoModal" class="modal" aria-modal="true" role="dialog" aria-labelledby="acadModalTitle" aria-describedby="acadModalBody">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Cerrar">✖</button>
+      <h3 id="acadModalTitle"></h3>
+      <div id="acadModalBody"></div>
     </div>
   </div>
 

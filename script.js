@@ -76,9 +76,8 @@ const siteData = {
     {
       titulo: "Torneo De Futsal",
       fecha: "2025-03-03",
-      img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRq8okiCfdbFbnLz9dgIwRaqdHYJa11rvG-T3O2XsHyMQPCeqiYb03kOlryV7FyEJ-bEVyc6E5PNnq2pd8onuXCFXPfIrXJU7zidbzt2DbJGSyW6EycTXvpn794KnMjzb9EoLMYZpiEjmw6JRSH_lfMselAlAQlH18PeYO6NhDG6d1pup3VMyGWhxfCkJg/w1600/Selecci%C3%B3n%20de%20Futsal%20Masculino%20del%20Liceo%20Polit%C3%A9cnico%20Cardenal%20Ra%C3%BAl%20Silva%20Henr%C3%ADquez%20obtiene%20el%20segundo%20lugar%20en%20campeonato%20interliceal.jpeg",
+      img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRq8okiCfdbFbnLz9dgIwRaqdHYJa11rvG-T3O2XsHyMQPCeqiYb03kOlryV7FyEJ-bEVyc6E5PNnq2pd8onuXCFXPfIrXJU7zidbzt2DbJGSyW6EycTXvpn794KnMjzb9EoLMYZpiEjmw6JRSH_lfMselAlAQlH18PeYO6NhDG6d1pup3VMyGWhxfCkJg/w1600/Selecci%C3%B3n%20de%20Futsal%20Masculino%20del%20Liceo%20Polit%C3%A9cnico%20Cardenal%20Ra%C3%Bal%20Silva%20Henr%C3%ADquez%20obtiene%20el%20segundo%20lugar%20en%20campeonato%20interliceal.jpeg",
       resumen: "Estudiantes del liceo industrial brillan en el campeonato de futsal.",
-      // Nuevo: texto distinto para el pop-up
       detalle: "La selección de futsal del Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán participó con entusiasmo en un torneo interliceano, destacando por su compañerismo, disciplina y compromiso. Acompañados por su profesor y vistiendo los colores institucionales, los estudiantes demostraron que el deporte también es un espacio de aprendizaje y formación en valores como el respeto, la perseverancia y el trabajo en equipo, dejando en alto el nombre del establecimiento y reafirmando su espíritu bicentenario."
     },
     {
@@ -253,42 +252,53 @@ function createCarousel({ root, slides, autoplay = true, interval = 6000 }) {
 }
 
 /* =========================================================
-   Accordion
+   Académico: Tarjetas horizontales + Modal
 ========================================================= */
-function mountAccordion(root, items) {
-  root.innerHTML = "";
-  items.forEach((item, i) => {
-    const el = document.createElement("div");
-    el.className = "ac-item";
-    el.innerHTML = `
-      <button class="ac-trigger" aria-expanded="false">
-        <span>${item.titulo}</span>
-        <span aria-hidden="true">▾</span>
-      </button>
-      <div class="ac-panel" id="acp-${i}">
-        <div class="card" style="border:none; box-shadow:none; padding:14px 0 0 0;">
-          ${item.contenido}
-        </div>
-      </div>
-    `;
-    const trigger = el.querySelector(".ac-trigger");
-    const panel = el.querySelector(".ac-panel");
-    trigger.addEventListener("click", () => {
-      const isOpen = el.classList.toggle("open");
-      trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      panel.style.maxHeight = isOpen ? panel.scrollHeight + "px" : "0px";
+function renderAcademicCards(root, items) {
+  if (!root) return;
+  root.innerHTML = items.map((it, i) => `
+    <button class="acad-card" role="listitem" data-index="${i}" aria-haspopup="dialog" aria-label="Abrir ${it.titulo}">
+      <span class="acad-card__title">${it.titulo}</span>
+    </button>
+  `).join("");
+
+  // Modal
+  const modal = $("#academicoModal");
+  const mTitle = $("#acadModalTitle");
+  const mBody  = $("#acadModalBody");
+  const closeBtn = modal.querySelector(".modal-close");
+  let lastFocus = null;
+
+  function openModal(item, triggerBtn) {
+    lastFocus = triggerBtn || null;
+    mTitle.textContent = item.titulo || "Información";
+    mBody.innerHTML = item.contenido || "<p>Información no disponible.</p>";
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+  function closeModal() {
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+    if (lastFocus) lastFocus.focus();
+  }
+
+  root.querySelectorAll(".acad-card").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const idx = Number(e.currentTarget.dataset.index);
+      openModal(items[idx], e.currentTarget);
     });
-    if (i === 0) {
-      el.classList.add("open");
-      trigger.setAttribute("aria-expanded", "true");
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-    root.appendChild(el);
+  });
+
+  closeBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && modal.classList.contains("show")) closeModal();
   });
 }
 
 /* =========================================================
-   Render Estudiantes Quicklinks
+   Estudiantes Quicklinks
 ========================================================= */
 function renderStudentLinks(root, items) {
   root.innerHTML = items.map(it => `
@@ -301,8 +311,7 @@ function renderStudentLinks(root, items) {
 }
 
 /* =========================================================
-   Render Noticias
-   (Ahora el modal muestra "detalle" o un placeholder)
+   Noticias + modal (ya existente)
 ========================================================= */
 function renderNews(root, items) {
   const sorted = [...items].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
@@ -318,18 +327,14 @@ function renderNews(root, items) {
     </article>
   `).join("");
 
-  // --- Modal handling ---
   const modal = document.getElementById("newsModal");
   const modalImg = document.getElementById("modalImg");
   const modalTitle = document.getElementById("modalTitle");
   const modalText = document.getElementById("modalText");
   const closeBtn = modal.querySelector(".modal-close");
 
-  // Accesible: cerrar con ESC
   document.addEventListener("keydown", (ev) => {
-    if (ev.key === "Escape" && modal.classList.contains("show")) {
-      closeModal();
-    }
+    if (ev.key === "Escape" && modal.classList.contains("show")) closeModal();
   });
 
   function openModal(news) {
@@ -337,12 +342,10 @@ function renderNews(root, items) {
       "Texto informativo (placeholder) para el modal: aquí puedes ampliar la noticia con detalles, fechas, contacto, links y fotografías. Este texto es distinto al mostrado en la tarjeta.";
     modalImg.src = news.img || "";
     modalTitle.textContent = news.titulo || "";
-    // Usa 'detalle' si existe; si no, usa texto dummy
     modalText.textContent = news.detalle?.trim() || placeholder;
     modal.classList.add("show");
     document.body.style.overflow = "hidden";
   }
-
   function closeModal() {
     modal.classList.remove("show");
     document.body.style.overflow = "";
@@ -351,8 +354,7 @@ function renderNews(root, items) {
   root.querySelectorAll(".readmore").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const idx = e.currentTarget.dataset.index;
-      const news = sorted[idx];
-      openModal(news);
+      openModal(sorted[idx]);
     });
   });
 
@@ -383,7 +385,8 @@ window.addEventListener("DOMContentLoaded", () => {
       interval: Number(hero.dataset.interval || 6000)
     });
   }
-  mountAccordion($("#academicoAccordion"), siteData.academico);
+  // NUEVO: render de tarjetas académicas (reemplaza acordeón)
+  renderAcademicCards($("#academicoCards"), siteData.academico);
   renderStudentLinks($("#studentLinks"), siteData.estudiantes);
   renderNews($("#newsGrid"), siteData.noticias);
 });
