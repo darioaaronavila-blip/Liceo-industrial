@@ -3,21 +3,9 @@
 ========================================================= */
 const siteData = {
   hero: [
-    {
-      img: "img/IMG_20250912_081359.jpg",
-      title: "Formación Técnica con Excelencia",
-      text: "Aprendizajes significativos conectados con la industria y el territorio."
-    },
-    {
-      img: "img/IMG_20250915_165326.jpg",
-      title: "Inclusión y Dignidad",
-      text: "Un liceo público para todas y todos, sin discriminación."
-    },
-    {
-      img: "img/IMG_20250923_073916.jpg",
-      title: "Innovación Pedagógica",
-      text: "Metodologías activas y proyectos con sentido."
-    }
+    { img: "img/IMG_20250912_081359.jpg", title: "Formación Técnica con Excelencia", text: "Aprendizajes significativos conectados con la industria y el territorio." },
+    { img: "img/IMG_20250915_165326.jpg", title: "Inclusión y Dignidad", text: "Un liceo público para todas y todos, sin discriminación." },
+    { img: "img/IMG_20250923_073916.jpg", title: "Innovación Pedagógica", text: "Metodologías activas y proyectos con sentido." }
   ],
   academico: [
     {
@@ -78,21 +66,21 @@ const siteData = {
       fecha: "2025-03-03",
       img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRq8okiCfdbFbnLz9dgIwRaqdHYJa11rvG-T3O2XsHyMQPCeqiYb03kOlryV7FyEJ-bEVyc6E5PNnq2pd8onuXCFXPfIrXJU7zidbzt2DbJGSyW6EycTXvpn794KnMjzb9EoLMYZpiEjmw6JRSH_lfMselAlAQlH18PeYO6NhDG6d1pup3VMyGWhxfCkJg/w1600/Selecci%C3%B3n%20de%20Futsal%20Masculino%20del%20Liceo%20Polit%C3%A9cnico%20Cardenal%20Ra%C3%Bal%20Silva%20Henr%C3%ADquez%20obtiene%20el%20segundo%20lugar%20en%20campeonato%20interliceal.jpeg",
       resumen: "Estudiantes del liceo industrial brillan en el campeonato de futsal.",
-      detalle: "La selección de futsal del Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán participó con entusiasmo en un torneo interliceano, destacando por su compañerismo, disciplina y compromiso. Acompañados por su profesor y vistiendo los colores institucionales, los estudiantes demostraron que el deporte también es un espacio de aprendizaje y formación en valores como el respeto, la perseverancia y el trabajo en equipo, dejando en alto el nombre del establecimiento y reafirmando su espíritu bicentenario."
+      detalle: "La selección de futsal del Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán participó con entusiasmo en un torneo interliceano, destacando por su compañerismo, disciplina y compromiso..."
     },
     {
       titulo: "Entrega Reconocimiento Academico",
       fecha: "2025-04-10",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpn-Al5F_RIXBU9zaa9jIjUDiOwrj01Gvq9w&s",
       resumen: "Establecimiento reconoce a estudiantes destacados del liceo.",
-      detalle: "El Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán realizó una emotiva ceremonia de reconocimiento académico en la que estudiantes de distintas especialidades fueron destacados por su esfuerzo, responsabilidad y compromiso con su formación técnico-profesional. La actividad contó con la presencia del equipo directivo, docentes y comunidad educativa, quienes resaltaron la importancia de fortalecer valores como la excelencia y el trabajo en equipo. La jornada finalizó con una fotografía grupal que simboliza el compromiso conjunto de continuar promoviendo una educación de calidad en la región de Magallanes."
+      detalle: "El Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán realizó una emotiva ceremonia de reconocimiento académico..."
     },
     {
       titulo: "Fortaleciendo Habilidades Laborales",
       fecha: "2025-05-22",
       img: "https://www.subirfoto.es/get/sRdVW5.jpg",
       resumen: "Ceremonia de inauguración del Programa Fortaleciendo Habilidades para el Mundo Laboral con ONG Canales y HIF.",
-      detalle: "Contenido extendido (placeholder) para el pop-up: reseña del programa, competencias socio-laborales a desarrollar (comunicación efectiva, trabajo en equipo, ciudadanía digital), y agradecimientos a ONG Canales y HIF Global. Este texto no replica el resumen."
+      detalle: "Contenido extendido (placeholder) para el pop-up..."
     }
   ]
 };
@@ -174,11 +162,8 @@ function navigate(slug, replace = false) {
   setActiveNav("/" + slug);
   document.title = `Liceo Industrial – ${slug || "inicio"}`;
   const url = "/" + (slug || "");
-  if (replace) {
-    history.replaceState({ slug }, "", url);
-  } else {
-    history.pushState({ slug }, "", url);
-  }
+  if (replace) history.replaceState({ slug }, "", url);
+  else history.pushState({ slug }, "", url);
   mainnav?.classList.remove("open");
   navToggle?.setAttribute("aria-expanded", "false");
 }
@@ -252,7 +237,7 @@ function createCarousel({ root, slides, autoplay = true, interval = 6000 }) {
 }
 
 /* =========================================================
-   Académico: Tarjetas horizontales + Modal
+   Académico: Tarjetas horizontales + Modal (mobile-friendly)
 ========================================================= */
 function renderAcademicCards(root, items) {
   if (!root) return;
@@ -311,7 +296,7 @@ function renderStudentLinks(root, items) {
 }
 
 /* =========================================================
-   Noticias + modal (ya existente)
+   Noticias + modal (existente)
 ========================================================= */
 function renderNews(root, items) {
   const sorted = [...items].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
@@ -333,13 +318,10 @@ function renderNews(root, items) {
   const modalText = document.getElementById("modalText");
   const closeBtn = modal.querySelector(".modal-close");
 
-  document.addEventListener("keydown", (ev) => {
-    if (ev.key === "Escape" && modal.classList.contains("show")) closeModal();
-  });
+  document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && modal.classList.contains("show")) closeModal(); });
 
   function openModal(news) {
-    const placeholder =
-      "Texto informativo (placeholder) para el modal: aquí puedes ampliar la noticia con detalles, fechas, contacto, links y fotografías. Este texto es distinto al mostrado en la tarjeta.";
+    const placeholder = "Texto informativo (placeholder) para el modal...";
     modalImg.src = news.img || "";
     modalTitle.textContent = news.titulo || "";
     modalText.textContent = news.detalle?.trim() || placeholder;
@@ -385,7 +367,6 @@ window.addEventListener("DOMContentLoaded", () => {
       interval: Number(hero.dataset.interval || 6000)
     });
   }
-  // NUEVO: render de tarjetas académicas (reemplaza acordeón)
   renderAcademicCards($("#academicoCards"), siteData.academico);
   renderStudentLinks($("#studentLinks"), siteData.estudiantes);
   renderNews($("#newsGrid"), siteData.noticias);
