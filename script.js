@@ -10,6 +10,9 @@ const siteData = {
   academico: [
     {
       titulo: "Especialidades TP",
+      slug: "especialidades-tp",
+      // Puedes añadir 'media' y 'caption' si deseas imagen/leyenda por defecto
+      media: { img: "img/acad/especialidades.jpg", caption: "Talleres y laboratorios • Referencial" },
       contenido: `
         <ul>
           <li>Electricidad</li>
@@ -21,10 +24,13 @@ const siteData = {
           <li>Construcciones Metálicas</li>
         </ul>
         <p>Articulación con empresas locales, liceos y CFT/IP/Universidades.</p>
+        <p>Puedes insertar fotos, videos (iframe) y más en esta página.</p>
       `
     },
     {
       titulo: "Asignaturas & Plan Común",
+      slug: "asignaturas-plan-comun",
+      media: { img: "img/acad/plan-comun.jpg", caption: "Plan común • Referencial" },
       contenido: `
         <ul>
           <li>Lengua y Literatura</li>
@@ -39,16 +45,20 @@ const siteData = {
           <li>Música</li>
           <li>Historia</li>
         </ul>
+        <p>Recursos descargables y vínculos curriculares.</p>
       `
     },
     {
       titulo: "Apoyos al Aprendizaje",
+      slug: "apoyos-aprendizaje",
+      media: { img: "img/acad/apoyos.jpg", caption: "Acompañamiento • Referencial" },
       contenido: `
         <ul>
           <li>PIE: Programa de Integración Escolar</li>
           <li>ACLE: Talleres extraprogramáticos</li>
           <li>Convivencia Escolar & Orientación</li>
         </ul>
+        <p>Protocolos, derivaciones y redes de apoyo.</p>
       `
     }
   ],
@@ -63,26 +73,57 @@ const siteData = {
   noticias: [
     {
       titulo: "Torneo De Futsal",
+      slug: "torneo-de-futsal",
       fecha: "2025-03-03",
       img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRq8okiCfdbFbnLz9dgIwRaqdHYJa11rvG-T3O2XsHyMQPCeqiYb03kOlryV7FyEJ-bEVyc6E5PNnq2pd8onuXCFXPfIrXJU7zidbzt2DbJGSyW6EycTXvpn794KnMjzb9EoLMYZpiEjmw6JRSH_lfMselAlAQlH18PeYO6NhDG6d1pup3VMyGWhxfCkJg/w1600/Selecci%C3%B3n%20de%20Futsal%20Masculino%20del%20Liceo%20Polit%C3%A9cnico%20Cardenal%20Ra%C3%Bal%20Silva%20Henr%C3%ADquez%20obtiene%20el%20segundo%20lugar%20en%20campeonato%20interliceal.jpeg",
       resumen: "Estudiantes del liceo industrial brillan en el campeonato de futsal.",
-      detalle: "La selección de futsal del Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán participó con entusiasmo en un torneo interliceano, destacando por su compañerismo, disciplina y compromiso..."
+      detalle: "La selección de futsal del Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán participó con entusiasmo en un torneo interliceano..."
     },
     {
       titulo: "Entrega Reconocimiento Academico",
+      slug: "entrega-reconocimiento-academico",
       fecha: "2025-04-10",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpn-Al5F_RIXBU9zaa9jIjUDiOwrj01Gvq9w&s",
       resumen: "Establecimiento reconoce a estudiantes destacados del liceo.",
-      detalle: "El Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán realizó una emotiva ceremonia de reconocimiento académico..."
+      detalle: "El Liceo Industrial Bicentenario de Excelencia AQ Acharán realizó una emotiva ceremonia..."
     },
     {
       titulo: "Fortaleciendo Habilidades Laborales",
+      slug: "fortaleciendo-habilidades-laborales",
       fecha: "2025-05-22",
       img: "https://www.subirfoto.es/get/sRdVW5.jpg",
       resumen: "Ceremonia de inauguración del Programa Fortaleciendo Habilidades para el Mundo Laboral con ONG Canales y HIF.",
-      detalle: "Contenido extendido (placeholder) para el pop-up..."
+      detalle: "Contenido extendido (placeholder) para el detalle..."
     }
   ]
+};
+
+/* Páginas internas (detalle) de Quiénes Somos */
+const qsPages = {
+  "85-anios": {
+    title: "+85 años de historia",
+    body: "Nuestro liceo ha formado generaciones de técnicos y profesionales en Magallanes, construyendo una identidad basada en la excelencia, el respeto y el trabajo colaborativo.",
+    img: "img/qs/85-anios.jpg",
+    caption: "Archivo histórico institucional • Fotografía referencial"
+  },
+  "tp-excelencia": {
+    title: "TP de Excelencia",
+    body: "Somos parte de la red Bicentenario, con foco en gestión pedagógica, aprendizajes profundos y vinculación con el mundo productivo.",
+    img: "img/qs/tp-excelencia.jpg",
+    caption: "Laboratorio y equipamiento • Fotografía referencial"
+  },
+  "pie-acle": {
+    title: "PIE & ACLE",
+    body: "Acompañamiento especializado e inclusión efectiva. Sumamos talleres ACLE para potenciar talentos y la convivencia escolar.",
+    img: "img/qs/pie-acle.jpg",
+    caption: "Inclusión y participación • Fotografía referencial"
+  },
+  "vinculacion": {
+    title: "Vinculación con Empresas",
+    body: "Red de alianzas para prácticas, charlas técnicas y proyectos. Acercamos el aula a la industria para favorecer trayectorias formativas-laborales.",
+    img: "img/qs/vinculacion.jpg",
+    caption: "Visitas técnicas • Fotografía referencial"
+  }
 };
 
 /* =========================================================
@@ -94,6 +135,13 @@ function formatDate(iso) {
   const d = new Date(iso);
   return d.toLocaleDateString("es-CL", { year: "numeric", month: "long", day: "numeric" });
 }
+const slugify = (s) => s.toLowerCase()
+  .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+
+/* Asegurar slugs si faltan */
+siteData.noticias.forEach(n => { if(!n.slug) n.slug = slugify(n.titulo); });
+siteData.academico.forEach(a => { if(!a.slug) a.slug = slugify(a.titulo); });
 
 /* =========================================================
    Theme toggle (persistente)
@@ -139,8 +187,18 @@ const ROUTES = {
   "estudiantes": "estudiantes",
   "noticias": "noticias",
   "contacto": "contacto",
+  // subrutas
+  "qs/85-anios": "qs-detail",
+  "qs/tp-excelencia": "qs-detail",
+  "qs/pie-acle": "qs-detail",
+  "qs/vinculacion": "qs-detail",
+  // dinámicas:
+  // noticias/<slug> -> news-detail
+  // academico/<slug> -> acad-detail
 };
 const VIEWS = Object.values(ROUTES).map(id => document.getElementById(id)).filter(Boolean);
+VIEWS.push(document.getElementById("news-detail"));
+VIEWS.push(document.getElementById("acad-detail"));
 VIEWS.forEach(sec => sec.classList.add("view"));
 
 function showView(id) {
@@ -153,13 +211,35 @@ function showView(id) {
 }
 function setActiveNav(path) {
   $$(".mainnav a").forEach(a => a.classList.remove("active"));
-  const link = document.querySelector(`.mainnav a[href='${path}']`);
+  const root = "/" + (path.split("/")[0] || "");
+  const link = document.querySelector(`.mainnav a[href='${root}']`);
   if (link) link.classList.add("active");
 }
 function navigate(slug, replace = false) {
-  const id = ROUTES[slug] || "inicio";
-  showView(id);
-  setActiveNav("/" + slug);
+  // QS
+  if (slug?.startsWith("qs/")) {
+    const key = slug.split("/")[1];
+    renderQSDetail(key);
+    showView("qs-detail");
+  }
+  // Noticias detalle
+  else if (slug?.startsWith("noticias/")) {
+    const newsSlug = slug.split("/")[1];
+    renderNewsDetail(newsSlug);
+    showView("news-detail");
+  }
+  // Académico detalle
+  else if (slug?.startsWith("academico/")) {
+    const acadSlug = slug.split("/")[1];
+    renderAcadDetail(acadSlug);
+    showView("acad-detail");
+  }
+  else {
+    const id = ROUTES[slug] || "inicio";
+    showView(id);
+  }
+
+  setActiveNav(slug || "inicio");
   document.title = `Liceo Industrial – ${slug || "inicio"}`;
   const url = "/" + (slug || "");
   if (replace) history.replaceState({ slug }, "", url);
@@ -169,13 +249,30 @@ function navigate(slug, replace = false) {
 }
 window.addEventListener("popstate", (e) => {
   const slug = e.state?.slug || location.pathname.replace("/", "") || "inicio";
-  showView(ROUTES[slug] || "inicio");
-  setActiveNav("/" + slug);
+  if (slug.startsWith("qs/")) renderQSDetail(slug.split("/")[1]);
+  if (slug.startsWith("noticias/")) renderNewsDetail(slug.split("/")[1]);
+  if (slug.startsWith("academico/")) renderAcadDetail(slug.split("/")[1]);
+  const id =
+    slug.startsWith("qs/") ? "qs-detail" :
+    slug.startsWith("noticias/") ? "news-detail" :
+    slug.startsWith("academico/") ? "acad-detail" :
+    (ROUTES[slug] || "inicio");
+  showView(id);
+  setActiveNav(slug);
 });
 (function bootRouter() {
   VIEWS.forEach(v => v.setAttribute("aria-hidden", "true"));
   const slug = location.pathname.replace("/", "");
-  navigate(slug, true);
+  if (slug.startsWith("qs/")) renderQSDetail(slug.split("/")[1]);
+  if (slug.startsWith("noticias/")) renderNewsDetail(slug.split("/")[1]);
+  if (slug.startsWith("academico/")) renderAcadDetail(slug.split("/")[1]);
+  const id =
+    slug.startsWith("qs/") ? "qs-detail" :
+    slug.startsWith("noticias/") ? "news-detail" :
+    slug.startsWith("academico/") ? "acad-detail" :
+    (ROUTES[slug] || "inicio");
+  navigate(slug || "inicio", true);
+  showView(id);
 })();
 
 /* =========================================================
@@ -237,49 +334,43 @@ function createCarousel({ root, slides, autoplay = true, interval = 6000 }) {
 }
 
 /* =========================================================
-   Académico: Tarjetas horizontales + Modal (mobile-friendly)
+   Académico: Tarjetas -> Subpágina
 ========================================================= */
 function renderAcademicCards(root, items) {
   if (!root) return;
-  root.innerHTML = items.map((it, i) => `
-    <button class="acad-card" role="listitem" data-index="${i}" aria-haspopup="dialog" aria-label="Abrir ${it.titulo}">
+  root.innerHTML = items.map((it) => `
+    <article class="acad-card" role="link" tabindex="0" data-slug="${it.slug}" aria-label="Abrir ${it.titulo}">
       <span class="acad-card__title">${it.titulo}</span>
-    </button>
+    </article>
   `).join("");
 
-  // Modal
-  const modal = $("#academicoModal");
-  const mTitle = $("#acadModalTitle");
-  const mBody  = $("#acadModalBody");
-  const closeBtn = modal.querySelector(".modal-close");
-  let lastFocus = null;
-
-  function openModal(item, triggerBtn) {
-    lastFocus = triggerBtn || null;
-    mTitle.textContent = item.titulo || "Información";
-    mBody.innerHTML = item.contenido || "<p>Información no disponible.</p>";
-    modal.classList.add("show");
-    document.body.style.overflow = "hidden";
-    closeBtn.focus();
-  }
-  function closeModal() {
-    modal.classList.remove("show");
-    document.body.style.overflow = "";
-    if (lastFocus) lastFocus.focus();
-  }
-
-  root.querySelectorAll(".acad-card").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const idx = Number(e.currentTarget.dataset.index);
-      openModal(items[idx], e.currentTarget);
-    });
+  root.querySelectorAll(".acad-card").forEach(card => {
+    const slug = card.dataset.slug;
+    const go = () => navigate(`academico/${slug}`);
+    card.addEventListener("click", go);
+    card.addEventListener("keydown", (e) => { if (e.key === "Enter") go(); });
   });
+}
 
-  closeBtn.addEventListener("click", closeModal);
-  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
-  document.addEventListener("keydown", (ev) => {
-    if (ev.key === "Escape" && modal.classList.contains("show")) closeModal();
-  });
+/* Subpágina Académico */
+function renderAcadDetail(slug) {
+  const item = siteData.academico.find(a => a.slug === slug);
+  const fallback = { titulo: "Información", contenido: "<p>Contenido no disponible.</p>", media: {} };
+  const data = item || fallback;
+
+  $("#acadDetailTitle").textContent = data.titulo || "Académico";
+  $("#acadDetailBody").innerHTML = data.contenido || "<p>Contenido no disponible.</p>";
+
+  const img = $("#acadDetailImg");
+  if (data.media?.img) {
+    img.src = data.media.img;
+    img.alt = data.titulo || "Imagen académica";
+    $("#acadDetailCaption").textContent = data.media.caption || "";
+  } else {
+    img.src = "";
+    img.alt = "";
+    $("#acadDetailCaption").textContent = "";
+  }
 }
 
 /* =========================================================
@@ -296,56 +387,72 @@ function renderStudentLinks(root, items) {
 }
 
 /* =========================================================
-   Noticias + modal (existente)
+   Noticias: Cards -> Subpágina
 ========================================================= */
 function renderNews(root, items) {
   const sorted = [...items].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
-  root.innerHTML = sorted.map((n, i) => `
-    <article class="news-card" data-index="${i}">
+  root.innerHTML = sorted.map((n) => `
+    <article class="news-card" role="link" tabindex="0" data-slug="${n.slug}">
       <img src="${n.img}" alt="${n.titulo}" loading="lazy" />
       <div class="news-body">
         <h3>${n.titulo}</h3>
         <time datetime="${n.fecha}">${formatDate(n.fecha)}</time>
         <p>${n.resumen}</p>
-        <button class="readmore btn-small" data-index="${i}">Ver más</button>
       </div>
     </article>
   `).join("");
 
-  const modal = document.getElementById("newsModal");
-  const modalImg = document.getElementById("modalImg");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalText = document.getElementById("modalText");
-  const closeBtn = modal.querySelector(".modal-close");
-
-  document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && modal.classList.contains("show")) closeModal(); });
-
-  function openModal(news) {
-    const placeholder = "Texto informativo (placeholder) para el modal...";
-    modalImg.src = news.img || "";
-    modalTitle.textContent = news.titulo || "";
-    modalText.textContent = news.detalle?.trim() || placeholder;
-    modal.classList.add("show");
-    document.body.style.overflow = "hidden";
-  }
-  function closeModal() {
-    modal.classList.remove("show");
-    document.body.style.overflow = "";
-  }
-
-  root.querySelectorAll(".readmore").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const idx = e.currentTarget.dataset.index;
-      openModal(sorted[idx]);
-    });
+  root.querySelectorAll(".news-card").forEach(card => {
+    const slug = card.dataset.slug;
+    const go = (ev) => {
+      const isTime = ev.target?.closest?.("time");
+      if (isTime) return; // la fecha no navega
+      navigate(`noticias/${slug}`);
+    };
+    card.addEventListener("click", go);
+    card.addEventListener("keydown", (e) => { if (e.key === "Enter") navigate(`noticias/${slug}`); });
   });
+}
 
-  closeBtn.addEventListener("click", closeModal);
-  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+/* Subpágina Noticias */
+function renderNewsDetail(slug) {
+  const item = siteData.noticias.find(n => n.slug === slug);
+  const fallback = { titulo: "Noticia", fecha: new Date().toISOString(), img: "", resumen: "", detalle: "" };
+  const data = item || fallback;
+
+  $("#newsDetailTitle").textContent = data.titulo || "Noticia";
+  $("#newsDetailSummary").textContent = data.resumen || "";
+  $("#newsDetailBody").innerHTML = data.detalle ? `<p>${data.detalle}</p>` : "<p>Contenido no disponible.</p>";
+
+  const img = $("#newsDetailImg");
+  img.src = data.img || "";
+  img.alt = data.titulo || "Imagen de la noticia";
+  $("#newsDetailDate").textContent = formatDate(data.fecha);
 }
 
 /* =========================================================
-   Formulario de Contacto (demo)
+   QS: navegación (se mantiene)
+========================================================= */
+function wireQSBadges() {
+  $("#qsBadges")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".badge-link");
+    if (!btn) return;
+    const key = btn.dataset.qs;
+    navigate(`qs/${key}`);
+  });
+}
+function renderQSDetail(key) {
+  const data = qsPages[key] || { title: "Información", body: "Contenido no disponible.", img: "", caption: "" };
+  $("#qsDetailTitle").textContent = data.title;
+  $("#qsDetailBody").textContent = data.body;
+  const img = $("#qsDetailImg");
+  img.src = data.img || "";
+  img.alt = data.title || "Imagen";
+  $("#qsDetailCaption").textContent = data.caption || "";
+}
+
+/* =========================================================
+   Formularios
 ========================================================= */
 $("#contactForm")?.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -367,7 +474,34 @@ window.addEventListener("DOMContentLoaded", () => {
       interval: Number(hero.dataset.interval || 6000)
     });
   }
+  renderMobileQuickNav();
   renderAcademicCards($("#academicoCards"), siteData.academico);
   renderStudentLinks($("#studentLinks"), siteData.estudiantes);
   renderNews($("#newsGrid"), siteData.noticias);
+  wireQSBadges();
+
+  // Botones Volver en páginas de detalle
+  $("#newsBack")?.addEventListener("click", () => navigate("noticias"));
+  $("#acadBack")?.addEventListener("click", () => navigate("academico"));
+  $("#qsBack")?.addEventListener("click", () => navigate("quienes-somos"));
 });
+
+// Re-render accesos rápidos al cambiar tamaño
+function renderMobileQuickNav() {
+  const wrap = $(".mobile-quick-nav");
+  if (!wrap) return;
+  const isMobile = window.matchMedia("(max-width: 720px)").matches;
+  if (!isMobile) { wrap.innerHTML = ""; return; }
+  wrap.innerHTML = `
+    <div class="quick-nav">
+      <button class="quick-nav__btn" data-go="inicio">Inicio</button>
+      <button class="quick-nav__btn" data-go="quienes-somos">Quiénes Somos</button>
+      <button class="quick-nav__btn" data-go="academico">Académico</button>
+      <button class="quick-nav__btn" data-go="estudiantes">Estudiantes</button>
+      <button class="quick-nav__btn" data-go="noticias">Noticias</button>
+      <button class="quick-nav__btn" data-go="contacto">Contacto</button>
+    </div>
+  `;
+  wrap.querySelectorAll(".quick-nav__btn").forEach(b => b.addEventListener("click", () => navigate(b.dataset.go)));
+}
+window.addEventListener("resize", renderMobileQuickNav);
