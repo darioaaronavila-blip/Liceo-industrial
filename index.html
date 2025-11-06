@@ -7,6 +7,8 @@
   <meta name="description" content="Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán - Formación Técnica Profesional con excelencia, inclusión e innovación." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Ctext y='1em' font-size='96'%3E%F0%9F%9A%A7%3C/text%3E%3C/svg%3E">
+  <!-- Turnstile (CAPTCHA gratuito) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
   <!-- Header -->
@@ -180,14 +182,25 @@
       <div class="grid grid-2">
         <div class="card">
           <h3>Información</h3>
-          <p><strong>Dirección:</strong> Av. Principal 123, Punta Arenas</p>
+          <p><strong>Dirección:</strong> 21 de Mayo 2052, Punta Arenas</p>
           <p><strong>Email:</strong> <a href="mailto:contacto@liceoejemplo.cl">contacto@liceoejemplo.cl</a></p>
           <p><strong>Teléfono:</strong> <a href="tel:+56612123456">+56 61 2 123456</a></p>
           <hr />
-          <form id="contactForm" class="form">
-            <label>Nombre <input type="text" name="nombre" required /></label>
-            <label>Correo <input type="email" name="correo" required /></label>
-            <label>Mensaje <textarea name="mensaje" rows="4" required></textarea></label>
+          <form id="contactForm" class="form" novalidate>
+            <label>Nombre
+              <input type="text" name="nombre" required minlength="2" />
+            </label>
+            <label>Correo
+              <input id="correoInput" type="email" name="correo" required inputmode="email" autocomplete="email" />
+              <small id="emailHint" class="muted"></small>
+            </label>
+            <label>Mensaje
+              <textarea name="mensaje" rows="4" required minlength="10"></textarea>
+            </label>
+
+            <!-- CAPTCHA: reemplaza data-sitekey por tu clave de sitio de Turnstile -->
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAB_c5UIMrFBPtA0g8hWOuKm0R2Y" data-theme="auto"></div>
+
             <button class="btn" type="submit">Enviar</button>
             <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
           </form>
@@ -201,6 +214,18 @@
             </iframe>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Página “Gracias” -->
+  <section id="gracias" class="section reveal view" aria-hidden="true">
+    <div class="container thanks-wrap">
+      <div class="thanks-card">
+        <div class="thanks-icon">✔</div>
+        <h2>¡Gracias por escribirnos!</h2>
+        <p class="lead">Hemos recibido tu mensaje y <strong>nos pondremos en contacto</strong> a la brevedad.</p>
+        <button class="btn btn-soft" id="backHome">Volver al inicio</button>
       </div>
     </div>
   </section>
@@ -226,7 +251,6 @@
   </footer>
 
   <!-- (Se eliminó el modal de noticias; ya no se usa) -->
-  <!-- Modal Académico antiguo eliminado en funcionalidad; mantenemos por compatibilidad si quieres reusar -->
   <div id="academicoModal" class="modal" aria-modal="true" role="dialog" aria-labelledby="acadModalTitle" aria-describedby="acadModalBody" style="display:none"></div>
 
   <script src="script.js" defer></script>

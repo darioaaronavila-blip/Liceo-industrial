@@ -260,3 +260,22 @@ body{
 
 /* Evitar scroll horizontal por ancho 100vw del carrusel */
 html,body{overflow-x:hidden}
+
+/* ===== Gracias (confirmación) ===== */
+.thanks-wrap{display:grid;place-items:center;min-height:40vh}
+.thanks-card{
+  text-align:center; max-width:680px; width:100%;
+  background:var(--surface); border:1px solid rgba(0,0,0,.06);
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  padding: clamp(20px, 4vw, 36px);
+}
+.thanks-icon{
+  font-size:48px; line-height:1; width:72px; height:72px; margin:0 auto 12px;
+  display:grid; place-items:center; border-radius:50%;
+  background: color-mix(in oklab, var(--brand) 14%, var(--surface)); color: var(--brand-600);
+  box-shadow: inset 0 0 0 2px var(--ring);
+}
+.form .error{ outline:2px solid #e43e3e; border-color:#e43e3e }
+.form-msg.error{ color:#e43e3e }
+.form-msg.success{ color:#2f8f2f }
+

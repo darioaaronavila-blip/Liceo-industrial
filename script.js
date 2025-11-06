@@ -187,6 +187,7 @@ const ROUTES = {
   "estudiantes": "estudiantes",
   "noticias": "noticias",
   "contacto": "contacto",
+  "gracias": "gracias", // NUEVO: página de confirmación
   // subrutas
   "qs/85-anios": "qs-detail",
   "qs/tp-excelencia": "qs-detail",
@@ -452,14 +453,14 @@ function renderQSDetail(key) {
 }
 
 /* =========================================================
-   Formularios
+   Contacto: validación, Turnstile y envío a /api/contact
 ========================================================= */
-$("#contactForm")?.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.currentTarget));
-  $("#formMsg").textContent = `Gracias, ${data.nombre}. Responderemos a ${data.correo}.`;
-  e.currentTarget.reset();
-});
+
+// Validación de formato de e-mail (cliente)
+function looksLikeEmail(email){
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  return re.test(String(email).trim());
+}
 
 /* =========================================================
    Boot
@@ -484,6 +485,89 @@ window.addEventListener("DOMContentLoaded", () => {
   $("#newsBack")?.addEventListener("click", () => navigate("noticias"));
   $("#acadBack")?.addEventListener("click", () => navigate("academico"));
   $("#qsBack")?.addEventListener("click", () => navigate("quienes-somos"));
+  $("#backHome")?.addEventListener("click", () => navigate("inicio")); // Para /gracias
+
+  // CONTACTO: manejo del formulario
+  const form = $("#contactForm");
+  if(form){
+    const msg = $("#formMsg");
+    const emailInput = $("#correoInput");
+    const emailHint = $("#emailHint");
+
+    // UX validación en vivo del correo
+    emailInput?.addEventListener("input", (e) => {
+      const val = e.currentTarget.value;
+      emailInput.classList.remove("error");
+      if(!val){ emailHint.textContent = ""; return; }
+      emailHint.textContent = looksLikeEmail(val) ? "Formato válido ✓" : "Revisa el formato del correo";
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.className = "form-msg";
+      msg.textContent = "";
+
+      const data = Object.fromEntries(new FormData(form));
+      const nombre = (data.nombre || "").trim();
+      const correo = (data.correo || "").trim();
+      const mensaje = (data.mensaje || "").trim();
+
+      // Validación básica
+      if(!nombre || nombre.length < 2){
+        msg.textContent = "Por favor, escribe tu nombre.";
+        msg.classList.add("error");
+        return;
+      }
+      if(!looksLikeEmail(correo)){
+        msg.textContent = "Por favor, ingresa un correo válido.";
+        msg.classList.add("error");
+        emailInput?.classList.add("error");
+        emailHint.textContent = "Ejemplo: nombre@dominio.cl";
+        return;
+      }
+      if(!mensaje || mensaje.length < 10){
+        msg.textContent = "El mensaje es muy corto.";
+        msg.classList.add("error");
+        return;
+      }
+
+      // Token Turnstile (el widget inserta un input hidden con este name)
+      const captchaToken = form.querySelector('input[name="cf-turnstile-response"]')?.value;
+      if(!captchaToken){
+        msg.textContent = "Por favor, completa el CAPTCHA.";
+        msg.classList.add("error");
+        return;
+      }
+
+      msg.textContent = "Enviando…";
+
+      try{
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify({ nombre, correo, mensaje, token: captchaToken })
+        });
+        const json = await res.json();
+
+        if(!res.ok){
+          msg.textContent = json?.error || "No se pudo enviar. Intenta nuevamente.";
+          msg.classList.add("error");
+          if(window.turnstile?.reset) turnstile.reset(); // reset captcha
+          return;
+        }
+
+        // Éxito → navegar a /gracias
+        form.reset();
+        if(window.turnstile?.reset) turnstile.reset();
+        navigate("gracias");
+      }catch(err){
+        console.error(err);
+        msg.textContent = "Ocurrió un error inesperado.";
+        msg.classList.add("error");
+        if(window.turnstile?.reset) turnstile.reset();
+      }
+    });
+  }
 });
 
 // Re-render accesos rápidos al cambiar tamaño
