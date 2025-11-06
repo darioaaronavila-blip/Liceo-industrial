@@ -11,7 +11,6 @@ const siteData = {
     {
       titulo: "Especialidades TP",
       slug: "especialidades-tp",
-      // Puedes añadir 'media' y 'caption' si deseas imagen/leyenda por defecto
       media: { img: "img/acad/especialidades.jpg", caption: "Talleres y laboratorios • Referencial" },
       contenido: `
         <ul>
@@ -187,7 +186,7 @@ const ROUTES = {
   "estudiantes": "estudiantes",
   "noticias": "noticias",
   "contacto": "contacto",
-  "gracias": "gracias", // NUEVO: página de confirmación
+  "gracias": "gracias",
   // subrutas
   "qs/85-anios": "qs-detail",
   "qs/tp-excelencia": "qs-detail",
@@ -216,6 +215,45 @@ function setActiveNav(path) {
   const link = document.querySelector(`.mainnav a[href='${root}']`);
   if (link) link.classList.add("active");
 }
+
+/* =========================================================
+   Turnstile: render explícito cuando la vista está visible
+========================================================= */
+function mountTurnstileIfVisible() {
+  const contactView = document.getElementById("contacto");
+  if (!contactView) return;
+
+  const isActive = contactView.classList.contains("is-active");
+  const el = contactView.querySelector(".cf-turnstile");
+
+  if (!isActive || !el) return;
+  if (!window.turnstile) return; // librería aún no cargada
+
+  // Evitar render duplicado
+  if (el.dataset.tsRendered === "1") return;
+
+  const sitekey = el.getAttribute("data-sitekey");
+  if (!sitekey || sitekey === "TURNSTILE_SITE_KEY") {
+    console.warn("Turnstile: data-sitekey no configurado.");
+    return;
+  }
+
+  try {
+    window.turnstile.render(el, {
+      sitekey,
+      theme: el.getAttribute("data-theme") || "auto",
+    });
+    el.dataset.tsRendered = "1";
+  } catch (err) {
+    console.error("Turnstile render error:", err);
+  }
+}
+
+// callback global (desde el script con ?onload=onTurnstileLoaded)
+window.onTurnstileLoaded = function() {
+  mountTurnstileIfVisible();
+};
+
 function navigate(slug, replace = false) {
   // QS
   if (slug?.startsWith("qs/")) {
@@ -247,7 +285,13 @@ function navigate(slug, replace = false) {
   else history.pushState({ slug }, "", url);
   mainnav?.classList.remove("open");
   navToggle?.setAttribute("aria-expanded", "false");
+
+  // 🔹 Si estamos en /contacto, renderiza Turnstile ahora
+  if ((slug || "inicio") === "contacto") {
+    setTimeout(mountTurnstileIfVisible, 0);
+  }
 }
+
 window.addEventListener("popstate", (e) => {
   const slug = e.state?.slug || location.pathname.replace("/", "") || "inicio";
   if (slug.startsWith("qs/")) renderQSDetail(slug.split("/")[1]);
@@ -260,7 +304,11 @@ window.addEventListener("popstate", (e) => {
     (ROUTES[slug] || "inicio");
   showView(id);
   setActiveNav(slug);
+
+  // 🔹 También al navegar con back/forward
+  setTimeout(mountTurnstileIfVisible, 0);
 });
+
 (function bootRouter() {
   VIEWS.forEach(v => v.setAttribute("aria-hidden", "true"));
   const slug = location.pathname.replace("/", "");
@@ -274,6 +322,9 @@ window.addEventListener("popstate", (e) => {
     (ROUTES[slug] || "inicio");
   navigate(slug || "inicio", true);
   showView(id);
+
+  // 🔹 Intento inicial (por si abriste directo /contacto y el script ya cargó)
+  setTimeout(mountTurnstileIfVisible, 0);
 })();
 
 /* =========================================================
@@ -568,6 +619,9 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // 🔹 Intento de montaje al final del boot
+  setTimeout(mountTurnstileIfVisible, 0);
 });
 
 // Re-render accesos rápidos al cambiar tamaño
