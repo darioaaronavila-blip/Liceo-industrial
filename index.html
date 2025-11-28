@@ -91,15 +91,17 @@
   <!-- Página interna dinámica de Quiénes Somos (detalle insignia) -->
   <section id="qs-detail" class="section container reveal view" aria-hidden="true">
     <button class="btn btn-soft back-btn" id="qsBack">← Volver</button>
-    <div class="qs-detail-wrap">
-      <div class="qs-detail-text">
-        <h2 id="qsDetailTitle">Título</h2>
-        <p id="qsDetailBody">Contenido</p>
-      </div>
-      <figure class="qs-detail-media">
-        <img id="qsDetailImg" src="" alt="" />
+    <div class="detail-wrap">
+      <figure class="detail-media">
+        <div class="media-aspect">
+          <img id="qsDetailImg" src="" alt="" />
+        </div>
         <figcaption id="qsDetailCaption" class="muted"></figcaption>
       </figure>
+      <article class="detail-text">
+        <h2 id="qsDetailTitle">Título</h2>
+        <p id="qsDetailBody">Contenido</p>
+      </article>
     </div>
   </section>
 
@@ -180,37 +182,47 @@
       </header>
 
       <div class="grid grid-2">
+        <!-- Card Información + Íconos -->
         <div class="card">
           <h3>Información</h3>
           <p><strong>Dirección:</strong> 21 de Mayo 2052, Punta Arenas</p>
-          <p><strong>Email:</strong> <a href="mailto:contacto@liceoejemplo.cl">contacto@liceoejemplo.cl</a></p>
-          <p><strong>Teléfono:</strong> <a href="tel:+56612123456">+56 61 2 123456</a></p>
           <hr />
-          <form id="contactForm" class="form" novalidate>
-            <label>Nombre
-              <input type="text" name="nombre" required minlength="2" />
-            </label>
-            <label>Correo
-              <input id="correoInput" type="email" name="correo" required inputmode="email" autocomplete="email" />
-              <small id="emailHint" class="muted"></small>
-            </label>
-            <label>Mensaje
-              <textarea name="mensaje" rows="4" required minlength="10"></textarea>
-            </label>
-
-            <!-- CAPTCHA: reemplaza data-sitekey por tu clave de sitio de Turnstile -->
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAB_c5UIMrFBPtA0g8hWOuKm0R2Y" data-theme="auto"></div>
-
-            <button class="btn" type="submit">Enviar</button>
-            <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-          </form>
+          <div class="contact-social">
+            <!-- Editar href con los enlaces reales -->
+            <a
+              href="https://www.facebook.com/liceoindustrialpuq"
+              rel="noopener noreferrer"
+              class="contact-social__icon"
+              aria-label="Facebook del liceo"
+            >
+              f
+            </a>
+            <a
+              href="https://www.instagram.com/liceoindustrialpuq?fbclid=IwY2xjawOWIshleHRuA2FlbQIxMABicmlkETF4NGRjanZTbmdPTmp3STAyc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHl40ELexTicQIpE7nAxpZHM1f9lic3vyJIeOIlFT6XZgY8hkFr1fbPKmOIwx_aem_UPVwTdb4zC7M9jGY7NZOOQ"
+              rel="noopener noreferrer"
+              class="contact-social__icon"
+              aria-label="Instagram del liceo"
+            >
+              
+            </a>
+            <a
+              href="https://www.google.com/maps?q=21+de+Mayo+2052,+Punta+Arenas,+Magallanes+y+la+Antártica+Chilena"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-social__icon"
+              aria-label="Ubicación en Google Maps"
+            >
+              📍
+            </a>
+          </div>
         </div>
 
+        <!-- Card Mapa -->
         <div class="card">
           <h3>Ubicación</h3>
           <div class="map-embed" role="img" aria-label="Mapa de la ubicación">
             <iframe title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-70.941%2C-53.164%2C-70.880%2C-53.106&layer=mapnik">
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-70.9245,-53.1765,-70.9145,-53.1665&layer=mapnik&marker=-53.17153,-70.91924">
             </iframe>
           </div>
         </div>
@@ -238,9 +250,8 @@
         <div class="muted">© 2025. Todos los derechos reservados.</div>
       </div>
       <div class="footer-social">
-        <a href="#" aria-label="Facebook" title="Facebook"></a>
-        <a href="#" aria-label="Instagram" title="Instagram"></a>
-        <a href="#" aria-label="YouTube" title="YouTube"></a>
+        <a href="https://www.facebook.com/liceoindustrialpuq" aria-label="Facebook" title="Facebook">📘</a>
+        <a href="https://www.instagram.com/liceoindustrialpuq?fbclid=IwY2xjawOWIshleHRuA2FlbQIxMABicmlkETF4NGRjanZTbmdPTmp3STAyc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHl40ELexTicQIpE7nAxpZHM1f9lic3vyJIeOIlFT6XZgY8hkFr1fbPKmOIwx_aem_UPVwTdb4zC7M9jGY7NZOOQ" aria-label="Instagram" title="Instagram">📸</a>
       </div>
       <div class="footer-legal">
         <a href="/quienes-somos">Proyecto Educativo</a>

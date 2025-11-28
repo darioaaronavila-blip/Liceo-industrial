@@ -11,7 +11,7 @@ const siteData = {
     {
       titulo: "Especialidades TP",
       slug: "especialidades-tp",
-      media: { img: "img/acad/especialidades.jpg", caption: "Talleres y laboratorios • Referencial" },
+      media: { img: "https://iili.io/fCzeYv9.md.jpg", caption: "Talleres y laboratorios • Referencial" },
       contenido: `
         <ul>
           <li>Electricidad</li>
@@ -29,7 +29,7 @@ const siteData = {
     {
       titulo: "Asignaturas & Plan Común",
       slug: "asignaturas-plan-comun",
-      media: { img: "img/acad/plan-comun.jpg", caption: "Plan común • Referencial" },
+      media: { img: "https://iili.io/fCz6qYv.md.jpg", caption: "Plan común • Referencial" },
       contenido: `
         <ul>
           <li>Lengua y Literatura</li>
@@ -50,7 +50,7 @@ const siteData = {
     {
       titulo: "Apoyos al Aprendizaje",
       slug: "apoyos-aprendizaje",
-      media: { img: "img/acad/apoyos.jpg", caption: "Acompañamiento • Referencial" },
+      media: { img: "https://lh3.googleusercontent.com/pw/AP1GczMiWW0v0qoXDPpjnL6H6XQ9iQYbHId1plWDfyXCYN2EuSxO0yl3KrCDYHVFxhAehKKp_RSd5rKUSYAmfE1HDoeCeeiT99ZpqhIScLXXKdHkI9YAtj9mbMNkspTp9-9DjWzpwO9V34D2FDdchJBmWj6_-w=w1159-h869-s-no-gm?authuser=1", caption: "Acompañamiento • Referencial" },
       contenido: `
         <ul>
           <li>PIE: Programa de Integración Escolar</li>
@@ -62,19 +62,16 @@ const siteData = {
     }
   ],
   estudiantes: [
-    { icon: "📄", titulo: "Reglamento Interno", url: "#", desc: "Descarga en PDF" },
-    { icon: "🗓️", titulo: "Horarios", url: "#", desc: "Jornadas y módulos" },
-    { icon: "🧭", titulo: "Convivencia Escolar", url: "#", desc: "Protocolos de actuación" },
-    { icon: "🧰", titulo: "Práctica Profesional", url: "#", desc: "Requisitos y convenios" },
-    { icon: "💻", titulo: "Recursos Digitales", url: "#", desc: "Links útiles y plataformas" },
-    { icon: "📝", titulo: "Documentos", url: "#", desc: "Formatos y solicitudes" }
+    { icon: "📄", titulo: "Reglamento Interno", url: "https://raw.githubusercontent.com/darioaaronavila-blip/Liceo-industrial/main/Reglamento%20de%20Convivencia%202025.pdf", desc: "Descarga en PDF" },
+    { icon: "📘", titulo: "Reglamento de Evaluación", url: "https://raw.githubusercontent.com/darioaaronavila-blip/Liceo-industrial/main/REGLAMENTO%20DE%20EVALUACION%202025%20%20FINAL.pdf", desc: "Descarga en PDF" },
+    { icon: "🧰", titulo: "Práctica Profesional", url: "https://raw.githubusercontent.com/darioaaronavila-blip/Liceo-industrial/main/REGLAMENTO%20DE%20PR%C3%81CTICA%20Y%20TITULACI%C3%93N.pdf", desc: "Requisitos y convenios" },
   ],
   noticias: [
     {
       titulo: "Torneo De Futsal",
       slug: "torneo-de-futsal",
       fecha: "2025-03-03",
-      img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRq8okiCfdbFbnLz9dgIwRaqdHYJa11rvG-T3O2XsHyMQPCeqiYb03kOlryV7FyEJ-bEVyc6E5PNnq2pd8onuXCFXPfIrXJU7zidbzt2DbJGSyW6EycTXvpn794KnMjzb9EoLMYZpiEjmw6JRSH_lfMselAlAQlH18PeYO6NhDG6d1pup3VMyGWhxfCkJg/w1600/Selecci%C3%B3n%20de%20Futsal%20Masculino%20del%20Liceo%20Polit%C3%A9cnico%20Cardenal%20Ra%C3%Bal%20Silva%20Henr%C3%ADquez%20obtiene%20el%20segundo%20lugar%20en%20campeonato%20interliceal.jpeg",
+      img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhRq8okiCfdbFbnLz9dgIwRaqdHYJa11rvG-T3O2XsHyMQPCeqiYb03kOlryV7FyEJ-bEVyc6E5PNnq2pd8onuXCFXPfIrXJU7zidbzt2DbJGSyW6EycTXvpn794KnMjzb9EoLMYZpiEjmw6JRSH_lfMselAlAQlH18PeYO6NhDG6d1pup3VMyGWhxfCkJg/w1600/Selecci%C3%B3n%20de%20Futsal%20Masculino%20del%20Liceo%20Polit%C3%A9cnico%20Cardenal%20Ra%C3%BAl%20Silva%20Henr%C3%ADquez%20obtiene%20el%20segundo%20lugar%20en%20campeonato%20interliceal.jpeg",
       resumen: "Estudiantes del liceo industrial brillan en el campeonato de futsal.",
       detalle: "La selección de futsal del Liceo Industrial Bicentenario de Excelencia Armando Quezada Acharán participó con entusiasmo en un torneo interliceano..."
     },
@@ -102,25 +99,25 @@ const qsPages = {
   "85-anios": {
     title: "+85 años de historia",
     body: "Nuestro liceo ha formado generaciones de técnicos y profesionales en Magallanes, construyendo una identidad basada en la excelencia, el respeto y el trabajo colaborativo.",
-    img: "img/qs/85-anios.jpg",
+    img: "https://i.ytimg.com/vi/YqixbIqeY8w/maxresdefault.jpg",
     caption: "Archivo histórico institucional • Fotografía referencial"
   },
   "tp-excelencia": {
     title: "TP de Excelencia",
     body: "Somos parte de la red Bicentenario, con foco en gestión pedagógica, aprendizajes profundos y vinculación con el mundo productivo.",
-    img: "img/qs/tp-excelencia.jpg",
+    img: "https://i.ytimg.com/vi/5QPg6NYXJcE/maxresdefault.jpg",
     caption: "Laboratorio y equipamiento • Fotografía referencial"
   },
   "pie-acle": {
     title: "PIE & ACLE",
     body: "Acompañamiento especializado e inclusión efectiva. Sumamos talleres ACLE para potenciar talentos y la convivencia escolar.",
-    img: "img/qs/pie-acle.jpg",
+    img: "https://iili.io/fCIGdYJ.md.jpg",
     caption: "Inclusión y participación • Fotografía referencial"
   },
   "vinculacion": {
     title: "Vinculación con Empresas",
     body: "Red de alianzas para prácticas, charlas técnicas y proyectos. Acercamos el aula a la industria para favorecer trayectorias formativas-laborales.",
-    img: "img/qs/vinculacion.jpg",
+    img: "https://elmagallanico.com/wp-content/uploads/2025/09/2025-09-05-RENOVACION-CONVENIO-CON-LICEO-INDUSTRIAL-FOTO-GRUPAL-AGOSTO-2025.jpg",
     caption: "Visitas técnicas • Fotografía referencial"
   }
 };
@@ -538,7 +535,7 @@ window.addEventListener("DOMContentLoaded", () => {
   $("#qsBack")?.addEventListener("click", () => navigate("quienes-somos"));
   $("#backHome")?.addEventListener("click", () => navigate("inicio")); // Para /gracias
 
-  // CONTACTO: manejo del formulario
+  // CONTACTO: manejo del formulario (si existiera en el DOM)
   const form = $("#contactForm");
   if(form){
     const msg = $("#formMsg");
